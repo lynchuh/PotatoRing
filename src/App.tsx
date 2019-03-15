@@ -1,36 +1,30 @@
-import * as React from 'react';
-import { BrowserRouter,Link, Route } from 'react-router-dom'
+import React, { Fragment } from 'react';
+import { BrowserRouter,Route,Link } from 'react-router-dom'
 
+import Login from './components/login'
+import Index from './components/index'
+import SignUp from './components/signUp'
 import './App.scss';
 
 
-
+// login signUp index
 class App extends React.Component {
   public render() {
     return (
       <div className="App">
         <BrowserRouter>
-        <div>
-          <Route path='/' exact={true} component={Home}/>
-          <Route path='/about' component={About}/>
-          <Route path='/topics' component={Topic}/>
-          <Link to='/'>首页</Link>
-          <Link to='/about'>关于</Link>
-          <Link to='/topics'>主题</Link>
-        </div>
+          <Fragment>
+            <Link to='/' >首页</Link>
+            <Link to='/login' >登陆</Link>
+            <Link to='/' >注册</Link>
+            <Route path='/' exact={true} component={Index} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={SignUp} />
+          </Fragment>
         </BrowserRouter>
       </div>
     );
   }
-}
-function Home() {
-  return <h2>Home</h2>;
-}
-function About() {
-  return <h2>about</h2>;
-}
-function Topic() {
-  return <h2>topic</h2>;
 }
 
 export default App;
