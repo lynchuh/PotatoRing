@@ -16,10 +16,10 @@ class App extends React.Component {
           <Fragment>
             <Link to='/' >首页</Link>
             <Link to='/login' >登陆</Link>
-            <Link to='/' >注册</Link>
+            <Link to='/signUp' >注册</Link>
             <Route path='/' exact={true} component={Index} />
             <Route path='/login' component={Login} />
-            <Route path='/signup' component={SignUp} />
+            <Route path='/signUp' component={SignUp} />
           </Fragment>
         </BrowserRouter>
       </div>
