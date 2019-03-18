@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import { Input, Button } from 'antd'
 import axios from 'src/config/axios'
 
-interface ISignInState {
+interface ISignUpState {
   account: string,
   password: string,
   passwordConfirm: string
 }
 
-export default class extends React.Component<any,ISignInState>{
+export default class extends React.Component<any,ISignUpState>{
   constructor(props){
     super(props)
     this.state = {
