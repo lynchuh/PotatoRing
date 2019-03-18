@@ -26,12 +26,8 @@ export default class extends React.Component<IRouter,IIndexState>{
     this.props.history.push('/login')
   }
   getCurrentUser = async ()=>{
-    try {
-      const response = await axios.get('/me')
-      this.setState({userInfo: response.data})
-    }catch(e){
-      console.log(e.response)
-    }
+    const response = await axios.get('/me')
+    this.setState({userInfo: response.data})
   }
   public render(){
     return (

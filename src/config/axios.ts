@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from './history'
 
 const appId = 'jvsMdkTzjo11tbKdhSD57TgL'
 const appSecret = 'buo2VrBQcNCxXspdzfGBhJiu'
@@ -29,8 +30,8 @@ instance.interceptors.response.use(response=>{
   return response
 },error=>{
   if(error.response.status === 401){
-    if(window.location.href === '/'){
-      window.location.href = '/login'
+    if(window.location.pathname === '/'){
+      history.push('/login')
     }
   }
   return Promise.reject(error)

@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Input, Button } from 'antd'
+import { Input, Button, Form } from 'antd'
 import axios from 'src/config/axios'
+
+import './index.scss'
 
 interface ISignInState {
   account: string,
@@ -16,7 +18,8 @@ export default class extends React.Component<any,ISignInState>{
       password: '',
     }
   }
-  submit= async ()=>{
+  submit= async (e)=>{
+    e.preventDefault()
     const {account,password} = this.state
     try{
       await axios.post('sign_in/user',{
@@ -25,7 +28,7 @@ export default class extends React.Component<any,ISignInState>{
       })
       this.props.history.push('/')
     }catch(e){
-      throw new Error(e)
+      console.error(e)
     }
   }
   changeFormData(target:string,event:any){
@@ -36,11 +39,13 @@ export default class extends React.Component<any,ISignInState>{
   public render(){
     const { account,password } = this.state
     return (
-      <div className= 'container' >
+      <div className= 'container login' >
         <h1>登陆</h1>
-        <Input placeholder='请输入用户名' value={account} onChange={this.changeFormData.bind(this,'account')}/>
-        <Input.Password placeholder='请输入密码' value={password} onChange={this.changeFormData.bind(this,'password')}/>
-        <Button onClick={this.submit}>登陆</Button>
+        <Form onSubmit={this.submit}>
+          <Input placeholder='请输入用户名' value={account} onChange={this.changeFormData.bind(this,'account')}/>
+          <Input.Password placeholder='请输入密码' value={password} onChange={this.changeFormData.bind(this,'password')}/>
+          <Button type='primary' htmlType='submit' >登陆</Button>
+        </Form>
         <span>还没有账号？<Link to='/signUp'>点此注册</Link></span>
       </div>
     )

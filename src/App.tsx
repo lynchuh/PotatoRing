@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter,Route } from 'react-router-dom'
-
+import { Route,Router } from 'react-router-dom'
+import history from './config/history'
 import Login from './components/login'
 import Index from './components/index'
 import SignUp from './components/signUp'
@@ -12,13 +12,13 @@ class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <BrowserRouter>
+        <Router history={history}>
           <Fragment>
             <Route path='/' exact={true} component={Index} />
             <Route path='/login' component={Login} />
             <Route path='/signUp' component={SignUp} />
           </Fragment>
-        </BrowserRouter>
+        </Router>
       </div>
     );
   }
