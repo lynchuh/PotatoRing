@@ -1,0 +1,43 @@
+.index{
+  max-width: 960px;
+  padding: 16px;
+  width: 100%;
+  margin: 0 auto;
+  header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .userInfo{
+      margin: 0 16px 0 auto;
+      .userName{
+        margin-right: .3em;
+      }
+    }
+    .logo{
+      height: 35px;
+      margin-left: 16px;
+    }
+    border-bottom:1px solid #e1e1e1;
+    margin-bottom: 20px;
+  }
+  main{
+    #todo{
+      padding: 16px;
+      width: 50%;
+      .addTodo{
+        margin-bottom: 20px;
+        .icon{
+          display: none;
+          &.show{
+            display: inline-block;
+            transition: all ease-in-out .5s;
+          }
+        }
+      }
+      .todolist{
+        border-top: 1px solid #e1e1e1;
+        min-height: 33px;
+      }
+    }
+  }
+}
