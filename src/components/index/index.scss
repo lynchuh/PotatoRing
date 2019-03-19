@@ -7,6 +7,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    h1{
+      font-size: 16px;
+      font-weight: 450;
+      margin:0;
+    }
     .userInfo{
       margin: 0 16px 0 auto;
       .userName{
@@ -19,25 +24,5 @@
     }
     border-bottom:1px solid #e1e1e1;
     margin-bottom: 20px;
-  }
-  main{
-    #todo{
-      padding: 16px;
-      width: 50%;
-      .addTodo{
-        margin-bottom: 20px;
-        .icon{
-          display: none;
-          &.show{
-            display: inline-block;
-            transition: all ease-in-out .5s;
-          }
-        }
-      }
-      .todolist{
-        border-top: 1px solid #e1e1e1;
-        min-height: 33px;
-      }
-    }
   }
 }

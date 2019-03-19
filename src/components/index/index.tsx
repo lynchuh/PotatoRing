@@ -49,6 +49,7 @@ export default class extends React.Component<IRouter,IIndexState>{
       <div className='container index' id='Index'>
         <header>
           <img className='logo' src={logo} alt=""/>
+          <h1>番茄土豆</h1>
           <Dropdown overlay={menu}>
             <span className='userInfo'>
               <span className='userName'>{this.state.userInfo ? this.state.userInfo.account:''}</span>
