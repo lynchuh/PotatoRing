@@ -18,7 +18,10 @@ export default class extends React.Component<any,ISignInState>{
       password: '',
     }
   }
-  submit= async (e)=>{
+  async componentDidMount(){
+    await this.getCurrentUser()
+  }
+  submit= async (e:React.FormEvent<EventTarget>)=>{
     e.preventDefault()
     const {account,password} = this.state
     try{
@@ -35,6 +38,10 @@ export default class extends React.Component<any,ISignInState>{
     const newVal = {}
     newVal[target] = event.target.value
     this.setState(newVal)
+  }
+  getCurrentUser = async ()=>{
+    const response = await axios.get('/me')
+    if(response) { this.props.history.push('/') }
   }
   public render(){
     const { account,password } = this.state

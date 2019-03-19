@@ -4,18 +4,20 @@ import axios from 'src/config/axios'
 
 
 interface IIndexState {
- userInfo: any
+  userInfo: any,
+  description: string
 }
+
 interface IRouter {
   history: any
 }
-
 
 export default class extends React.Component<IRouter,IIndexState>{
   constructor(props:any){
     super(props)
     this.state = {
-      userInfo:{}
+      description:'',
+      userInfo: null
     }
   }
   async componentWillMount(){
@@ -27,12 +29,12 @@ export default class extends React.Component<IRouter,IIndexState>{
   }
   getCurrentUser = async ()=>{
     const response = await axios.get('/me')
-    this.setState({userInfo: response.data})
+    if(!this.state.userInfo) {this.setState({userInfo: response.data})}
   }
   public render(){
     return (
       <div className='container'>
-      <p>欢迎，{this.state.userInfo.account}</p>
+      <p>欢迎，{this.state.userInfo ? this.state.userInfo.account:''}</p>
       <Button onClick={this.logout}>登出</Button>
       </div>
     )

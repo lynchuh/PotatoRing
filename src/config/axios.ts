@@ -1,8 +1,7 @@
 import axios from 'axios'
-import history from './history'
 
-const appId = 'jvsMdkTzjo11tbKdhSD57TgL'
-const appSecret = 'buo2VrBQcNCxXspdzfGBhJiu'
+import history from './history'
+import { appId,appSecret } from './appKey'
 
 // 生成一个实例
 const instance = axios.create({

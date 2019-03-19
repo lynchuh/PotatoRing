@@ -9,6 +9,9 @@
 # production
 /build
 
+# app-key
+/src/config/appKey.ts
+
 # IDE config
 .idea
 .vscode

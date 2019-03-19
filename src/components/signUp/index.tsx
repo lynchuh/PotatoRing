@@ -18,6 +18,9 @@ export default class extends React.Component<any,ISignUpState>{
       passwordConfirm:''
     }
   }
+  async componentDidMount(){
+    await this.getCurrentUser()
+  }
   submit= async (e)=>{
     e.preventDefault()
     const {account,password,passwordConfirm} = this.state
@@ -36,6 +39,10 @@ export default class extends React.Component<any,ISignUpState>{
     const newVal = {}
     newVal[target] = event.target.value
     this.setState(newVal)
+  }
+  getCurrentUser = async ()=>{
+    const response = await axios.get('/me')
+    if(response) { this.props.history.push('/') }
   }
   public render(){
     const { account,password,passwordConfirm } = this.state
