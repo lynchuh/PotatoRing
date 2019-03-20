@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import {Input,Icon} from 'antd'
 
 
@@ -48,7 +49,7 @@ export default class extends React.Component<IProps,Istate>{
   }
   public render(){
     const {description,showEnterIcon} = this.state
-    const suffix = <Icon type="enter" onClick={()=>this.addTodo()} className={description ||showEnterIcon ?'icon show' : 'icon' }/>
+    const suffix = <Icon type="enter" onClick={()=>this.addTodo()} className={classNames('icon',{show:description ||showEnterIcon}) }/>
     return(
       <React.Fragment>
         <Input className='addTodo' placeholder='添加新任务'

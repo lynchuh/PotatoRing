@@ -24,7 +24,6 @@ export default class extends React.Component<any,IState>{
   get unCompletedTodos(){
     return this.state.todos.filter(todo=>!todo.completed)
   }
-
   getTodos = async ()=>{
     try{
       const response = await axios.get('/todos')
@@ -45,6 +44,9 @@ export default class extends React.Component<any,IState>{
     }
   }
   updateTodo = async (id:number,params:any)=>{
+    if('description' in params && this.state.editingId=== -1){
+      return
+    }
     try{
       const response = await axios.put(`/todos/${id}`,params)
       const {resource} = response.data

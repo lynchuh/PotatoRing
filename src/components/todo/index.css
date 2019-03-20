@@ -7,10 +7,15 @@
 
 #todo .addTodo .icon {
   display: none;
+  transition: all ease-in-out .5s;
 }
 
 #todo .addTodo .icon.show {
-  transition: all ease-in-out .5s;
+  display: inline-block;
+}
+
+#todo .addTodo:hover .icon {
+  display: inline-block;
 }
 
 #todo .todolist {
@@ -73,4 +78,9 @@
 
 #todo .todolist .todoItem .iconlist .anticon {
   margin-right: 8px;
+}
+
+#todo .todolist .todoItem .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #999;
+  border-color: #999;
 }
