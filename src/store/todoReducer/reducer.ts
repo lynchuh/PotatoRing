@@ -1,0 +1,39 @@
+import * as constants from '../constants'
+
+interface IinitState{
+  todos: any[],
+  editingId: number,
+  newDescription: string
+}
+
+const initState:IinitState = {
+  editingId: -1,
+  newDescription:'',
+  todos:[],
+}
+
+export default (state=initState,action:any)=>{
+  switch(action.type){
+    case constants.ADD_TODO_SUCCESS:
+      const todos = [action.data,...state.todos]
+      return {...state,todos,newDescription:''}
+    case constants.FETCH_TODOS_SUCCESS:
+      return {...state,todos:action.data}
+    case constants.UPDATE_TODO_SUCCESS:
+      let newTodos:any[]
+      if(action.data.deleted){
+        const deleteIndex = state.todos.findIndex(todo=>todo.id===action.data.id)
+        newTodos = [...state.todos]
+        newTodos.splice(deleteIndex,1)
+      }else{
+        newTodos = state.todos.map(todo=>todo.id===action.data.id?action.data : todo)
+      }
+      return {...state,todos: newTodos,editingId:-1}
+    case constants.TOGGLE_EDIT_ID:
+      return {...state,editingId:action.id}
+    case constants.CHANGE_NEW_DESCRIPTION:
+      return {...state, newDescription:action.description}
+    default:
+      return state
+  }
+}

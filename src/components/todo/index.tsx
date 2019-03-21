@@ -1,90 +1,38 @@
 import React from 'react'
 import NewTodo from './newTodo'
 import TodoItem from './todoItem'
-import axios from 'src/config/axios'
 import { connect } from 'react-redux'
+
+import {FetchTodo} from 'src/store/todoReducer/actions'
 
 import './index.scss'
 
-interface IState{
-  todos: any[],
-  editingId: number
-}
 
-const mapStateToProps = state=>({...state})
-const mapDispatchToProps = dispatch=>({})
+
+const mapStateToProps = ({Todo})=>({todos:Todo.todos})
+const mapDispatchToProps = (dispatch:any)=>({
+  fetchTodos:()=>dispatch(FetchTodo())
+})
 
 @connect(mapStateToProps,mapDispatchToProps)
 
-export default class extends React.Component<any,IState>{
+export default class extends React.Component<any,any>{
   constructor(props){
     super(props)
-    this.state = {
-      editingId: -1,
-      todos:[],
-    }
   }
   get completedTodos(){
-    return this.state.todos.filter(todo=>todo.completed)
+    return this.props.todos.filter(todo=>todo.completed)
   }
   get unCompletedTodos(){
-    return this.state.todos.filter(todo=>!todo.completed)
-  }
-  getTodos = async ()=>{
-    try{
-      const response = await axios.get('/todos')
-      const todos = response.data.resources.filter(todo=>!todo.deleted)
-      this.setState({todos})
-    }catch(e){
-      console.error(e)
-    }
-  }
-  addTodo= async (description:string)=>{
-    try{
-      const response = await axios.post('/todos',{description})
-      this.setState({
-        todos:[response.data.resource,...this.state.todos]
-      })
-    }catch(e){
-      console.log('addtodo',e)
-    }
-  }
-  updateTodo = async (id:number,params:any)=>{
-    if('description' in params && this.state.editingId=== -1){
-      return
-    }
-    try{
-      const response = await axios.put(`/todos/${id}`,params)
-      const {resource} = response.data
-      let newTodos:any[]
-      if(resource.deleted){
-        const deleteIndex:number = this.state.todos.findIndex(todo=>todo.id===resource.id)
-        newTodos = [...this.state.todos]
-        newTodos.splice(deleteIndex,1)
-      }else{
-        newTodos = this.state.todos.map( todo=> todo.id===resource.id ? resource:todo)
-      }
-      this.setState({
-        editingId: -1,
-        todos: newTodos
-      })
-    }catch(e){
-      console.error(e)
-    }
-  }
-  toEditing =(id:number)=>{
-    this.setState({
-      editingId: id
-    })
+    return this.props.todos.filter(todo=>!todo.completed)
   }
   componentDidMount (){
-    this.getTodos()
-    console.log(this.props)
+    this.props.fetchTodos()
   }
   public render(){
     return(
       <div id="todo">
-        <NewTodo addTodo={this.addTodo}/>
+        <NewTodo/>
         <div className="todolist">
           {
             this.unCompletedTodos.map(item=>(
@@ -94,9 +42,6 @@ export default class extends React.Component<any,IState>{
                 id={item.id}
                 deleted = {item.deleted}
                 completed={item.completed}
-                editingId = {this.state.editingId}
-                toEditing={this.toEditing}
-                update = {this.updateTodo}
               />
             ))
           }
@@ -108,9 +53,6 @@ export default class extends React.Component<any,IState>{
                 id={item.id}
                 deleted = {item.deleted}
                 completed={item.completed}
-                editingId = {this.state.editingId}
-                toEditing={this.toEditing}
-                update = {this.updateTodo}
               />
             ))
           }

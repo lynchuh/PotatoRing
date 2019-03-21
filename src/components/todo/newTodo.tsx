@@ -1,41 +1,33 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import {Input,Icon} from 'antd'
 
+import { AddTodo, ChangeNewDesc } from 'src/store/todoReducer/actions'
 
 interface Istate{
-  description: string,
-  showEnterIcon: boolean
+  showEnterIcon: boolean,
 }
 
 interface IProps {
-  addTodo: (description:string)=>void
+  addTodo: (description:string)=>void,
+  changeNewDesc: (desc:string)=>void,
+  description: string
 }
 
-export default class extends React.Component<IProps,Istate>{
+const mapStateToProps = ({Todo})=>({description:Todo.newDescription})
+
+const mapDispatchToProps = dispatch=>({
+  addTodo:(description:string)=>dispatch(AddTodo({description})),
+  changeNewDesc: (description:string)=>dispatch(ChangeNewDesc(description))
+})
+
+class NewTodo extends React.Component<IProps,Istate>{
   constructor(props){
     super(props)
     this.state = {
-      description:'',
       showEnterIcon: false
     }
-  }
-  changeTodo = (e:React.ChangeEvent<HTMLInputElement>)=>{
-    this.setState({
-      description: e.target.value
-    })
-  }
-  onPressEnter = (event:React.KeyboardEvent<EventTarget>)=>{
-    if(event.key==='Enter'){
-      this.addTodo()
-    }
-  }
-  addTodo=()=>{
-    const {description}= this.state
-    this.props.addTodo(description)
-    this.setState({
-      description:''
-    })
   }
   showIcon = ()=>{
     this.setState({
@@ -48,15 +40,16 @@ export default class extends React.Component<IProps,Istate>{
     })
   }
   public render(){
-    const {description,showEnterIcon} = this.state
-    const suffix = <Icon type="enter" onClick={()=>this.addTodo()} className={classNames('icon',{show:description ||showEnterIcon}) }/>
+    const {showEnterIcon} = this.state
+    const {description} = this.props
+    const suffix = <Icon type="enter" onClick={()=>this.props.addTodo(description)} className={classNames('icon',{show:description ||showEnterIcon}) }/>
     return(
       <React.Fragment>
         <Input className='addTodo' placeholder='添加新任务'
           suffix={suffix}
-          value={this.state.description}
-          onChange={this.changeTodo}
-          onPressEnter={this.onPressEnter}
+          value={description}
+          onChange={(e:React.ChangeEvent<HTMLInputElement>)=>this.props.changeNewDesc(e.target.value)}
+          onPressEnter={()=>this.props.addTodo(description)}
           onFocus = { this.showIcon }
           onBlur = { this.hideIcon }
           />
@@ -64,3 +57,5 @@ export default class extends React.Component<IProps,Istate>{
     )
   }
 }
+
+export default connect(mapStateToProps,mapDispatchToProps)(NewTodo)
