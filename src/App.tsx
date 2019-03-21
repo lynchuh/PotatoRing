@@ -2,24 +2,29 @@ import React, { Fragment } from 'react';
 import { Route,Router } from 'react-router-dom'
 import history from './config/history'
 import Login from './components/login'
-import Index from './components/index'
+import Home from './components/home'
 import SignUp from './components/signUp'
+
+import { Provider } from 'react-redux'
+import store from './store'
+
 import './App.scss';
 
 
-// login signUp index
 class App extends React.Component {
   public render() {
     return (
-      <div className="App">
-        <Router history={history}>
-          <Fragment>
-            <Route path='/' exact={true} component={Index} />
-            <Route path='/login' component={Login} />
-            <Route path='/signUp' component={SignUp} />
-          </Fragment>
-        </Router>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <Router history={history}>
+            <Fragment>
+              <Route path='/' exact={true} component={Home} />
+              <Route path='/login' component={Login} />
+              <Route path='/signUp' component={SignUp} />
+            </Fragment>
+          </Router>
+        </div>
+      </Provider>
     );
   }
 }

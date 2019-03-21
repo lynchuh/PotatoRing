@@ -2,6 +2,7 @@ import React from 'react'
 import NewTodo from './newTodo'
 import TodoItem from './todoItem'
 import axios from 'src/config/axios'
+import { connect } from 'react-redux'
 
 import './index.scss'
 
@@ -9,6 +10,11 @@ interface IState{
   todos: any[],
   editingId: number
 }
+
+const mapStateToProps = state=>({...state})
+const mapDispatchToProps = dispatch=>({})
+
+@connect(mapStateToProps,mapDispatchToProps)
 
 export default class extends React.Component<any,IState>{
   constructor(props){
@@ -73,6 +79,7 @@ export default class extends React.Component<any,IState>{
   }
   componentDidMount (){
     this.getTodos()
+    console.log(this.props)
   }
   public render(){
     return(
@@ -112,3 +119,6 @@ export default class extends React.Component<any,IState>{
     )
   }
 }
+
+
+
