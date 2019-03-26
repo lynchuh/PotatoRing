@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import Todo from './todoReducer/reducer'
+import Todo from './todos/reducer'
 
 export default combineReducers({
   Todo

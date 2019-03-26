@@ -1,8 +1,5 @@
 #todo{
   padding: 16px;
-  width: 50%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
   .addTodo{
     .icon{
       display: none;
@@ -23,7 +20,6 @@
     margin-top: 12px;
     .todoItem{
       display: flex;
-      // justify-content: center;
       align-items: center;
       &:focus,&:hover{
         background: rgb(249,249,249);

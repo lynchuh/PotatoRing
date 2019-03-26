@@ -1,8 +1,7 @@
 import React from 'react'
 import { Checkbox,Input,Icon } from 'antd'
-import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { UpdateTodo, ToggleEditId } from 'src/store/todoReducer/actions'
+
 
 interface IProps{
   description:string,
@@ -10,7 +9,6 @@ interface IProps{
   deleted: boolean,
   completed: boolean,
   editingId: number,
-  addTodo:(description:string)=>any,
   updateTodo:(id:number,params:any)=>any,
   toggleEditId:(id:number)=>any
 }
@@ -19,13 +17,7 @@ interface IState{
   description: string
 }
 
-const mapStateToProps = ({Todo})=>({editingId:Todo.editingId})
-const mapDispatchToProps = dispatch=>({
-  toggleEditId:(id)=>dispatch(ToggleEditId(id)),
-  updateTodo:(id,params)=>dispatch(UpdateTodo(id,params)),
-})
-
-class TodoItem extends React.Component<IProps,IState>{
+export default class TodoItem extends React.Component<IProps,IState>{
   constructor(props:IProps){
     super(props)
     this.state = {
@@ -41,7 +33,7 @@ class TodoItem extends React.Component<IProps,IState>{
       description:e.target.value
     })
   }
-  updateTodo(id,params){
+  updateTodo(id:number,params:any){
     if('description' in params && this.props.editingId=== -1){
       return
     }
@@ -70,4 +62,3 @@ class TodoItem extends React.Component<IProps,IState>{
     )
   }
 }
-export default connect<IProps,IState>(mapStateToProps,mapDispatchToProps)(TodoItem)

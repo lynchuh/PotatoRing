@@ -3,6 +3,7 @@ import { Menu,Dropdown,Icon } from 'antd'
 
 import axios from 'src/config/axios'
 import Todo from 'src/components/todo'
+import Tomatoes from 'src/components/tomatoes'
 import logo from 'src/static/logo.png'
 
 import './index.scss'
@@ -59,6 +60,7 @@ export default class extends React.Component<IRouter,IIndexState>{
           </Dropdown>
         </header>
         <main>
+          <Tomatoes />
           <Todo />
         </main>
       </div>

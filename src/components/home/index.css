@@ -31,3 +31,17 @@
   height: 35px;
   margin-left: 16px;
 }
+
+.index main {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.index main .content {
+  background: #fff;
+  box-shadow: 0 2px 0 rgba(225, 225, 225, 0.2);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: calc(50% - 8px);
+}
