@@ -48,7 +48,7 @@ export default class extends React.Component<IRouter,IIndexState>{
       </Menu>
     );
     return (
-      <div className='container index' id='Index'>
+      <div className='container' id='home'>
         <header>
           <img className='logo' src={logo} alt=""/>
           <h1>番茄土豆</h1>

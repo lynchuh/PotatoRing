@@ -1,14 +1,49 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+import TomatoAction  from './tomatoAction'
+import { AbortTomatoes,FetchTomatoes, AddTomatoes } from 'src/store/tomatoes/action'
 
 import './index.scss'
 
-export default class Tomatoes extends React.Component{
+interface IProps{
+  FetchTomatoes: ()=>void,
+  AbortTomatoes: (id:number,params:any)=>void,
+  AddTomatoes: (params:any)=>void,
+  tomatoes: any[]
+}
 
+
+const mapStateToProps =({Tomato})=>({...Tomato})
+const mapDispatchToProps = {
+  AbortTomatoes,
+  AddTomatoes,
+  FetchTomatoes
+}
+
+class Tomatoes extends React.Component<IProps,any>{
+  componentDidMount(){
+    this.props.FetchTomatoes()
+  }
+  get unfinishedTomato(){
+    const unAborted = this.props.tomatoes.filter(tomato=>!tomato.aborted)
+    return unAborted.filter(tomato=>!tomato.description && !tomato.ended_at)[0]
+  }
+  get finishedTomato(){
+    const unAborted = this.props.tomatoes.filter(tomato=>!tomato.aborted)
+    return unAborted.filter(tomato=> tomato.description && tomato.ended_at)
+  }
   render(){
     return (
       <div className="content" id="tomatos">
-        番茄闹钟
+        <TomatoAction
+          abortTomato={this.props.AbortTomatoes}
+          addTomato = {this.props.AddTomatoes}
+          unfinishedTomato = {this.unfinishedTomato}
+        />
       </div>
     )
   }
 }
+
+export default connect(mapStateToProps,mapDispatchToProps)(Tomatoes)

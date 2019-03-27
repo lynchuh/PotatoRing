@@ -36,7 +36,7 @@ export const AddTodo = (data:IaddData)=>( async (dispatch:any)=>{
       type: constants.ADD_TODO_SUCCESS
     })
   }catch(error){
-    console.log('addtodofail',error)
+    console.log('addtodofail,errorInfo:',error)
     dispatch({
       error,
       type: constants.ADD_TODO_FAILURE
@@ -54,7 +54,7 @@ export const UpdateTodo = (id:number,data:IupdateData)=> ( async (dispatch:any)=
   }catch(error){
     dispatch({
       error,
-      type: constants.UPDATE_TODO_FAILUER
+      type: constants.UPDATE_TODO_FAILURE
     })
   }
 })

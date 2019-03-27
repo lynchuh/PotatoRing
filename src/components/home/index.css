@@ -1,11 +1,11 @@
-.index {
+#home {
   max-width: 960px;
   padding: 16px;
   width: 100%;
   margin: 0 auto;
 }
 
-.index header {
+#home header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,35 +13,45 @@
   margin-bottom: 20px;
 }
 
-.index header h1 {
+#home header h1 {
   font-size: 16px;
   font-weight: 450;
   margin: 0;
 }
 
-.index header .userInfo {
+#home header .userInfo {
   margin: 0 16px 0 auto;
 }
 
-.index header .userInfo .userName {
+#home header .userInfo .userName {
   margin-right: .3em;
 }
 
-.index header .logo {
+#home header .logo {
   height: 35px;
   margin-left: 16px;
 }
 
-.index main {
+#home main {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
 
-.index main .content {
+#home main .content {
   background: #fff;
   box-shadow: 0 2px 0 rgba(225, 225, 225, 0.2);
   border: 1px solid #ddd;
   border-radius: 8px;
   width: calc(50% - 8px);
+}
+
+@media (max-width: 760px) {
+  #home main {
+    flex-direction: column;
+  }
+  #home main .content {
+    width: calc(100% - 8px);
+    margin-bottom: 16px;
+  }
 }
