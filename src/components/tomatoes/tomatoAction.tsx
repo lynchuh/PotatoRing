@@ -1,7 +1,8 @@
 import React,{Fragment} from 'react'
 import {Button, Input,Icon, Modal} from 'antd'
 import classNames from 'classnames'
-import CountDown from './countDown'
+// import CountDown from './countDown'
+import CountDown from './countDownHook'
 
 const confirm = Modal.confirm
 

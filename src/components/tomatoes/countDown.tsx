@@ -7,7 +7,7 @@ interface IProps {
 interface IState {
   timer: number
 }
-let timeId:any = null
+let timeId:NodeJS.Timeout
 
 export default class extends React.Component<IProps,IState>{
   constructor(props){
@@ -20,7 +20,7 @@ export default class extends React.Component<IProps,IState>{
     timeId = setInterval(()=>{
       if(this.state.timer < 1000){
         this.props.onFinished()
-        window.clearInterval(timeId)
+        clearInterval(timeId)
         return
       }
       this.setState({
@@ -29,7 +29,7 @@ export default class extends React.Component<IProps,IState>{
     },1000)
   }
   componentWillUnmount(){
-    window.clearInterval(timeId)
+    clearInterval(timeId)
   }
   render(){
     const {timer} = this.state
