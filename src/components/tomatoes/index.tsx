@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import TomatoAction  from './tomatoAction'
+import TomatoList from './tomatoList'
 import { AbortTomatoes,FetchTomatoes, AddTomatoes } from 'src/store/tomatoes/action'
 
 import './index.scss'
@@ -41,6 +42,7 @@ class Tomatoes extends React.Component<IProps,any>{
           addTomato = {this.props.AddTomatoes}
           unfinishedTomato = {this.unfinishedTomato}
         />
+        <TomatoList finishedTomato ={this.finishedTomato}/>
       </div>
     )
   }

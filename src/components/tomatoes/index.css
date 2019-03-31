@@ -45,12 +45,53 @@
 
 #tomatos .tomato_action .countDown .text {
   position: relative;
+  overflow: hidden;
 }
 
 #tomatos .tomato_action .countDown .process {
   background: #F3F3F3;
+  border-right: 1px solid #d9d9d9;
   position: absolute;
-  height: 32px;
-  top: 0;
-  left: 0;
+  height: 30px;
+  top: 1px;
+  left: 1px;
+}
+
+#tomatos .tomato_list {
+  border-top: 1px solid #ddd;
+  margin-top: 12px;
+  padding: 16px;
+}
+
+#tomatos .tomato_list .days_tomatoes {
+  margin-bottom: 12px;
+}
+
+#tomatos .tomato_list .days_tomatoes .title {
+  display: flex;
+  justify-content: flex-start;
+  color: #999;
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 4px;
+}
+
+#tomatos .tomato_list .days_tomatoes .title .completed_desc {
+  margin-left: auto;
+  color: #666;
+  font-size: 12px;
+}
+
+#tomatos .tomato_list .days_tomatoes .tomatoes_wrapper .tomato_item {
+  display: flex;
+  font-size: 14px;
+}
+
+#tomatos .tomato_list .days_tomatoes .tomatoes_wrapper .tomato_item .date_time {
+  color: #999;
+  padding-right: 12px;
+}
+
+#tomatos .tomato_list .days_tomatoes .tomatoes_wrapper .tomato_item .desc {
+  color: #000;
 }
