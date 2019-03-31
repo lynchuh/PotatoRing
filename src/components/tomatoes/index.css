@@ -40,4 +40,17 @@
   border-radius: 4px;
   height: 32px;
   padding: 4px;
+  overflow: hidden;
+}
+
+#tomatos .tomato_action .countDown .text {
+  position: relative;
+}
+
+#tomatos .tomato_action .countDown .process {
+  background: #F3F3F3;
+  position: absolute;
+  height: 32px;
+  top: 0;
+  left: 0;
 }

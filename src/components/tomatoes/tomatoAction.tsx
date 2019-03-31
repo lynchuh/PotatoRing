@@ -1,8 +1,8 @@
 import React,{Fragment} from 'react'
 import {Button, Input,Icon, Modal} from 'antd'
 import classNames from 'classnames'
-// import CountDown from './countDown'
-import CountDown from './countDownHook'
+import CountDown from './countDown'
+// import CountDown from './countDownHook'
 
 const confirm = Modal.confirm
 
@@ -51,7 +51,7 @@ export default class TomatoAction extends React.Component<IProps,IState>{
     }
     return (// 仍在倒时中
       <Fragment>
-        <CountDown timer={duration-current+start} onFinished={this.onFinishCout}/>
+        <CountDown timer={duration-current+start} onFinished={this.onFinishCout} duration={duration}/>
         <Icon  type="close-circle" onClick={()=>this.showConfirm(id)}/>
       </Fragment>
     )
@@ -68,11 +68,12 @@ export default class TomatoAction extends React.Component<IProps,IState>{
   }
   showConfirm=(id:number)=>{
     confirm({
-      content: '你确定要取消这个番茄闹钟吗？',
+      title: '您目前正在一个番茄工作时间中，要放弃这个番茄吗？',
       onOk:()=>{
         this.props.abortTomato(id,{aborted:true})
       },
-      title:'confirm',
+      okText: '确认',
+      cancelText: '取消'
     })
   }
   onFinishCout = ()=>{
