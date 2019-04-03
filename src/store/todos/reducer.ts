@@ -20,14 +20,7 @@ export default (state=initState,action:any)=>{
     case constants.FETCH_TODOS_SUCCESS:
       return {...state,todos:action.data}
     case constants.UPDATE_TODO_SUCCESS:
-      let newTodos:any[]
-      if(action.data.deleted){
-        const deleteIndex = state.todos.findIndex(todo=>todo.id===action.data.id)
-        newTodos = [...state.todos]
-        newTodos.splice(deleteIndex,1)
-      }else{
-        newTodos = state.todos.map(todo=>todo.id===action.data.id?action.data : todo)
-      }
+      const newTodos = state.todos.map(todo=>todo.id===action.data.id?action.data : todo)
       return {...state,todos: newTodos,editingId:-1}
     case constants.TOGGLE_EDIT_ID:
       return {...state,editingId:action.id}

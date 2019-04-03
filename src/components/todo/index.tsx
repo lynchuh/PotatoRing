@@ -36,10 +36,10 @@ export default class extends React.Component<any,any>{
     super(props)
   }
   get completedTodos(){
-    return this.props.todos.filter(todo=>todo.completed)
+    return this.props.todos.filter(todo=>!todo.deleted).filter(todo=>todo.completed)
   }
   get unCompletedTodos(){
-    return this.props.todos.filter(todo=>!todo.completed)
+    return this.props.todos.filter(todo=>!todo.deleted).filter(todo=>!todo.completed)
   }
   componentDidMount (){
     this.props.FetchTodo()
@@ -59,7 +59,6 @@ export default class extends React.Component<any,any>{
                 key={item.id}
                 description={item.description}
                 id={item.id}
-                deleted = {item.deleted}
                 completed={item.completed}
                 editingId={this.props.editingId}
                 updateTodo = {this.props.UpdateTodo}
@@ -73,7 +72,6 @@ export default class extends React.Component<any,any>{
                 key={item.id}
                 description={item.description}
                 id={item.id}
-                deleted = {item.deleted}
                 completed={item.completed}
                 editingId={this.props.editingId}
                 updateTodo = {this.props.UpdateTodo}

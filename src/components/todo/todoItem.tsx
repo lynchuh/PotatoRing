@@ -6,7 +6,6 @@ import classNames from 'classnames'
 interface IProps{
   description:string,
   id: number,
-  deleted: boolean,
   completed: boolean,
   editingId: number,
   updateTodo:(id:number,params:any)=>any,
