@@ -31,6 +31,7 @@ export default class extends React.Component<IProps,IState>{
   }
   componentWillUnmount(){
     clearInterval(timeId)
+    document.title= '番茄闹钟App'
   }
   render(){
     const {timer} = this.state
