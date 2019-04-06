@@ -11,7 +11,7 @@ const instance = axios.create({
     't-app-secret':appSecret
   }
 })
-// 拦截器
+// 请求拦截器
 instance.interceptors.request.use( config=> {
   const xToken = localStorage.getItem('xToken')
   if(xToken){
@@ -22,13 +22,14 @@ instance.interceptors.request.use( config=> {
 },error=>{
   return Promise.reject(error)
 })
+// 响应拦截器
 instance.interceptors.response.use(response=>{
   if(response.headers['x-token']){
     localStorage.setItem('xToken',response.headers['x-token'])
   }
   return response
 },error=>{
-  if(error.response.status === 401){
+  if(error.response && error.response.status === 401){ // 与后端协议凡是没有登陆，返回401
     if(window.location.pathname === '/'){
       history.push('/login')
     }

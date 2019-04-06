@@ -21,6 +21,14 @@
   margin-top: 12px;
 }
 
+#todo .todolist .ant-collapse .ant-collapse-content-box {
+  padding: 0;
+}
+
+#todo .todolist .ant-collapse .ant-collapse-header {
+  text-align: left;
+}
+
 #todo .todolist .todoItem {
   display: flex;
   align-items: center;

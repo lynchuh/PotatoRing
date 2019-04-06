@@ -36,6 +36,9 @@ export default class TodoItem extends React.Component<IProps,IState>{
     if('description' in params && this.props.editingId=== -1){
       return
     }
+    if('completed' in params && params.completed){
+      params = {...params,completed_at: new Date()}
+    }
     this.props.updateTodo(id,params)
   }
   public render(){

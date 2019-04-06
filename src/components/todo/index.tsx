@@ -1,5 +1,6 @@
 import React from 'react'
 import NewTodo from './newTodo'
+import { Collapse,Icon } from 'antd';
 import TodoItem from './todoItem'
 import { connect } from 'react-redux'
 
@@ -11,13 +12,24 @@ interface IConnectProps {
   todos:any,
   description: string,
   editingId: number,
-  AddTodo: ()=>void,
+  AddTodo: (params)=>void,
   ChangeNewDesc: ()=>void,
   FetchTodo: ()=>void,
   ToggleEditId: ()=>void,
   UpdateTodo: ()=>void
 }
 
+const {Panel} = Collapse
+const getExtra = () => (
+  <Icon
+    type="close-circle"
+    onClick={(event) => {
+      // If you don't want click extra trigger collapse, you can prevent this:
+      event.stopPropagation();
+      console.log('clean')
+    }}
+  />
+);
 
 const mapStateToProps = ({Todo})=>({todos:Todo.todos,description:Todo.newDescription,editingId:Todo.editingId})
 const mapDispatchToProps = {
@@ -66,19 +78,24 @@ export default class extends React.Component<any,any>{
               />
             ))
           }
-          {
-            this.completedTodos.map(item=>(
-              <TodoItem
-                key={item.id}
-                description={item.description}
-                id={item.id}
-                completed={item.completed}
-                editingId={this.props.editingId}
-                updateTodo = {this.props.UpdateTodo}
-                toggleEditId={this.props.ToggleEditId}
-              />
-            ))
-          }
+          <Collapse bordered={false} defaultActiveKey={['1']}>
+            <Panel header="最近完成任务" key="1" extra={getExtra()}>
+            {
+              this.completedTodos.map(item=>(
+                <TodoItem
+                  key={item.id}
+                  description={item.description}
+                  id={item.id}
+                  completed={item.completed}
+                  editingId={this.props.editingId}
+                  updateTodo = {this.props.UpdateTodo}
+                  toggleEditId={this.props.ToggleEditId}
+                />
+              ))
+            }
+            </Panel>
+          </Collapse>
+
         </div>
       </div>
     )

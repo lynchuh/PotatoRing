@@ -14,6 +14,7 @@ interface IProps{
   abortTomato:(id:number,params:any)=>void,
   addTomato:(params)=>void
   unfinishedTomato: any,
+  currentCompletedTodo: any[]
 }
 export default class TomatoAction extends React.Component<IProps,IState>{
   constructor(props){
@@ -81,7 +82,33 @@ export default class TomatoAction extends React.Component<IProps,IState>{
       isFinished: true
     })
   }
+  componentDidUpdate(preProp,preState){
+    if(!this.state.isFinished){ // 还在倒计时中
+      const description = this.props.currentCompletedTodo
+        .filter(t=>t.completed)
+        .reduce((a,b)=>a.concat(`${b.description}+`),'')
+      const preDesc = preProp.currentCompletedTodo
+        .filter(t=>t.completed)
+        .reduce((a,b)=>a.concat(`${b.description}+`),'')
+      if(description !== preDesc){
+        this.setState({
+          description : description.substr(0,description.length-1)
+        })
+      }
+    }else{ // 已经完成倒数
+      if(preProp.unfinishedTomato){
+        const updateCompleted = this.props.currentCompletedTodo[0]
+        const preUpdateCompletd = preProp.currentCompletedTodo[0]
+        if(updateCompleted.completed && updateCompleted.id !== preUpdateCompletd.id && !preState.description.includes(updateCompleted.description)){
+          this.setState({
+            description: `${updateCompleted.description}+${this.state.description}`
+          })
+        }
+      }
+    }
+  }
   render(){
+    console.log('state desc',this.state.description)
     return(
       <div className="tomato_action">
           { this.html }

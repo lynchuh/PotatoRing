@@ -18,9 +18,22 @@
     min-height: 33px;
     border-top: 1px solid #ddd;
     margin-top: 12px;
+    .ant-collapse{
+      .ant-collapse-content-box{
+        padding: 0;
+      }
+      .ant-collapse-header{
+        text-align: left
+      }
+    }
+
     .todoItem{
       display: flex;
       align-items: center;
+      padding: .3em .5em;
+      font-size: 14px;
+      text-align: left;
+      border-bottom: 1px solid #e1e1e1;
       &:focus,&:hover{
         background: rgb(249,249,249);
         .description{
@@ -45,10 +58,7 @@
           text-decoration: line-through;
         }
       }
-      padding: .3em .5em;
-      font-size: 14px;
-      text-align: left;
-      border-bottom: 1px solid #e1e1e1;
+
       .description{
         border: none;
         &:focus{
@@ -67,6 +77,7 @@
         background-color:#999;
         border-color: #999;
       }
+
     }
   }
 }

@@ -12,12 +12,12 @@ export default class extends React.Component<IProps>{
       const day = dayJs(tomato.started_at).format('YYYY-MM-DD')
       const list =newList.get(day) || []
       list.push(tomato)
-      list.sort((a,b)=>new Date(a.started_at).getTime()-new Date(b.started_at).getTime())
+      list.sort((a,b)=>new Date(b.started_at).getTime()-new Date(a.started_at).getTime()) // 按时间排序
       newList.set(day,list)
     })
     return newList.entries()
   }
-  public render(){
+  get tomatoListHtml(){
     const html:React.ReactChild[] = []
     for (const [day, tomatoes] of this.tomatoList){
       const dayItem  = day.split('-')
@@ -39,9 +39,12 @@ export default class extends React.Component<IProps>{
       )
       html.push(tomatoHtml)
     }
+    return html
+  }
+  public render(){
     return (
       <div className='tomato_list'>
-        {html}
+        {this.tomatoListHtml}
       </div>
     )
   }

@@ -11,11 +11,12 @@ interface IProps{
   FetchTomatoes: ()=>void,
   AbortTomatoes: (id:number,params:any)=>void,
   AddTomatoes: (params:any)=>void,
-  tomatoes: any[]
+  tomatoes: any[],
+  todos:any[]
 }
 
 
-const mapStateToProps =({Tomato})=>({...Tomato})
+const mapStateToProps =({Tomato,Todo})=>({...Tomato,todos:Todo.todos})
 const mapDispatchToProps = {
   AbortTomatoes,
   AddTomatoes,
@@ -34,6 +35,13 @@ class Tomatoes extends React.Component<IProps,any>{
     const unAborted = this.props.tomatoes.filter(tomato=>!tomato.aborted)
     return unAborted.filter(tomato=> tomato.description && tomato.ended_at)
   }
+  get currentCompletedTodo(){
+    if(this.unfinishedTomato){
+      return this.props.todos.filter(todo=>new Date(todo.completed_at).getTime() > new Date(this.unfinishedTomato.started_at).getTime())
+        .sort((a,b)=>new Date(b.completed_at).getTime()- new Date(a.completed_at).getTime())
+    }
+    return []
+  }
   render(){
     return (
       <div className="content" id="tomatos">
@@ -41,6 +49,7 @@ class Tomatoes extends React.Component<IProps,any>{
           abortTomato={this.props.AbortTomatoes}
           addTomato = {this.props.AddTomatoes}
           unfinishedTomato = {this.unfinishedTomato}
+          currentCompletedTodo = {this.currentCompletedTodo}
         />
         <TomatoList finishedTomato ={this.finishedTomato}/>
       </div>
