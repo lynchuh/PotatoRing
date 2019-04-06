@@ -2,25 +2,23 @@ import React,{Fragment} from 'react'
 import {Button, Input,Icon, Modal} from 'antd'
 import classNames from 'classnames'
 import CountDown from './countDown'
-// import CountDown from './countDownHook'
 
 const confirm = Modal.confirm
 
 interface IState{
-  description: string,
   isFinished: boolean
 }
 interface IProps{
   abortTomato:(id:number,params:any)=>void,
   addTomato:(params)=>void
+  changeTomaoDesc:(desc)=>any
+  description: string,
   unfinishedTomato: any,
-  currentCompletedTodo: any[]
 }
 export default class TomatoAction extends React.Component<IProps,IState>{
   constructor(props){
     super(props)
     this.state = {
-      description:'',
       isFinished: false
     }
   }
@@ -32,8 +30,8 @@ export default class TomatoAction extends React.Component<IProps,IState>{
     const start = new Date(created_at).getTime()
     const current = new Date().getTime()
     const suffix = <Icon type="enter"
-      onClick={()=>this.props.abortTomato(id,{description:this.state.description,ended_at: new Date()})}
-      className={classNames({show:this.state.description}) }/>
+      onClick={()=>this.props.abortTomato(id,{description:this.props.description,ended_at: new Date()})}
+      className={classNames({show:this.props.description}) }/>
 
     if(current-start>=duration || this.state.isFinished){ // 已经完成倒计时了
       return (
@@ -42,9 +40,9 @@ export default class TomatoAction extends React.Component<IProps,IState>{
             className='descInput'
             placeholder='刚刚完成了什么工作呢？'
             suffix={suffix}
-            value={this.state.description}
-            onChange={this.changeDesc}
-            onPressEnter={()=>this.props.abortTomato(id,{description:this.state.description,ended_at: new Date()})}
+            value={this.props.description}
+            onChange={(e)=>this.props.changeTomaoDesc(e.target.value)}
+            onPressEnter={()=>this.props.abortTomato(id,{description:this.props.description,ended_at: new Date()})}
             />
           <Icon type="close-circle" onClick={()=>this.showConfirm(id)}/>
         </Fragment>
@@ -56,11 +54,6 @@ export default class TomatoAction extends React.Component<IProps,IState>{
         <Icon  type="close-circle" onClick={()=>this.showConfirm(id)}/>
       </Fragment>
     )
-  }
-  changeDesc=(e:React.ChangeEvent<HTMLInputElement>)=>{
-    this.setState({
-      description: e.target.value
-    })
   }
   closeRest=()=>{
     this.setState({
@@ -82,33 +75,7 @@ export default class TomatoAction extends React.Component<IProps,IState>{
       isFinished: true
     })
   }
-  componentDidUpdate(preProp,preState){
-    if(!this.state.isFinished){ // 还在倒计时中
-      const description = this.props.currentCompletedTodo
-        .filter(t=>t.completed)
-        .reduce((a,b)=>a.concat(`${b.description}+`),'')
-      const preDesc = preProp.currentCompletedTodo
-        .filter(t=>t.completed)
-        .reduce((a,b)=>a.concat(`${b.description}+`),'')
-      if(description !== preDesc){
-        this.setState({
-          description : description.substr(0,description.length-1)
-        })
-      }
-    }else{ // 已经完成倒数
-      if(preProp.unfinishedTomato){
-        const updateCompleted = this.props.currentCompletedTodo[0]
-        const preUpdateCompletd = preProp.currentCompletedTodo[0]
-        if(updateCompleted.completed && updateCompleted.id !== preUpdateCompletd.id && !preState.description.includes(updateCompleted.description)){
-          this.setState({
-            description: `${updateCompleted.description}+${this.state.description}`
-          })
-        }
-      }
-    }
-  }
   render(){
-    console.log('state desc',this.state.description)
     return(
       <div className="tomato_action">
           { this.html }

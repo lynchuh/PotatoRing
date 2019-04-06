@@ -4,7 +4,7 @@ import { Collapse,Icon } from 'antd';
 import TodoItem from './todoItem'
 import { connect } from 'react-redux'
 
-import {FetchTodo,AddTodo, ChangeNewDesc, ToggleEditId, UpdateTodo} from 'src/store/todos/actions'
+import {FetchTodo,AddTodo, ChangeNewDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/actions'
 
 import './index.scss'
 
@@ -16,7 +16,8 @@ interface IConnectProps {
   ChangeNewDesc: ()=>void,
   FetchTodo: ()=>void,
   ToggleEditId: ()=>void,
-  UpdateTodo: ()=>void
+  UpdateTodo: ()=>void,
+  CompletedTodo: ()=>void
 }
 
 const {Panel} = Collapse
@@ -37,7 +38,8 @@ const mapDispatchToProps = {
   ChangeNewDesc,
   FetchTodo,
   ToggleEditId,
-  UpdateTodo
+  UpdateTodo,
+  CompletedTodo
 }
 
 @connect(mapStateToProps,mapDispatchToProps)
@@ -75,6 +77,7 @@ export default class extends React.Component<any,any>{
                 editingId={this.props.editingId}
                 updateTodo = {this.props.UpdateTodo}
                 toggleEditId={this.props.ToggleEditId}
+                completedTodo = {this.props.CompletedTodo}
               />
             ))
           }
@@ -90,6 +93,7 @@ export default class extends React.Component<any,any>{
                   editingId={this.props.editingId}
                   updateTodo = {this.props.UpdateTodo}
                   toggleEditId={this.props.ToggleEditId}
+                  completedTodo ={this.props.CompletedTodo}
                 />
               ))
             }

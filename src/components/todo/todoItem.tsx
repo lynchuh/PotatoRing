@@ -10,6 +10,7 @@ interface IProps{
   editingId: number,
   updateTodo:(id:number,params:any)=>any,
   toggleEditId:(id:number)=>any
+  completedTodo:(id,params)=>any
 }
 
 interface IState{
@@ -36,9 +37,6 @@ export default class TodoItem extends React.Component<IProps,IState>{
     if('description' in params && this.props.editingId=== -1){
       return
     }
-    if('completed' in params && params.completed){
-      params = {...params,completed_at: new Date()}
-    }
     this.props.updateTodo(id,params)
   }
   public render(){
@@ -47,7 +45,7 @@ export default class TodoItem extends React.Component<IProps,IState>{
       <div className={classNames('todoItem',{edit:editingId===id,completed})} >
         <Checkbox
           checked={completed}
-          onChange={()=>this.updateTodo(id,{completed:!completed})}
+          onChange={()=>this.props.completedTodo(id,{completed:!completed,completed_at: new Date()})}
         />
         <Input
           className="description"

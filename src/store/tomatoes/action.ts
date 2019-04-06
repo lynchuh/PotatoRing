@@ -54,3 +54,8 @@ export const AbortTomatoes = (id:number,params:IAbort)=> async dispatch=>{
     })
   }
 }
+
+export const ChangeTomaoDesc = (data)=>({
+  type: constants.CHANGE_NEW_TOMATO_DESCRIPTION,
+  data
+})

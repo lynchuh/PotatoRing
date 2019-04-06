@@ -59,6 +59,21 @@ export const UpdateTodo = (id:number,data:IupdateData)=> ( async (dispatch:any)=
   }
 })
 
+export const CompletedTodo =(id:number,data)=>(async dispatch=>{
+  try{
+    const response = await axios.put(`/todos/${id}`,data)
+    dispatch({
+      data:response.data.resource,
+      type: constants.COMPLETED_TODO_SUCCESS
+    })
+  }catch(error){
+    dispatch({
+      error,
+      type: constants.COMPLETED_TODO_FAILURE
+    })
+  }
+})
+
 export const ToggleEditId = (id:number)=>({
   id,
   type: constants.TOGGLE_EDIT_ID,
@@ -66,6 +81,6 @@ export const ToggleEditId = (id:number)=>({
 
 export const ChangeNewDesc = (description:string)=>({
   description,
-  type: constants.CHANGE_NEW_DESCRIPTION
+  type: constants.CHANGE_NEW_TODO_DESCRIPTION
 })
 

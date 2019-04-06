@@ -19,12 +19,13 @@ export default (state=initState,action:any)=>{
       return {...state,todos,newDescription:''}
     case constants.FETCH_TODOS_SUCCESS:
       return {...state,todos:action.data}
+    case constants.COMPLETED_TODO_SUCCESS:
     case constants.UPDATE_TODO_SUCCESS:
       const newTodos = state.todos.map(todo=>todo.id===action.data.id?action.data : todo)
       return {...state,todos: newTodos,editingId:-1}
     case constants.TOGGLE_EDIT_ID:
       return {...state,editingId:action.id}
-    case constants.CHANGE_NEW_DESCRIPTION:
+    case constants.CHANGE_NEW_TODO_DESCRIPTION:
       return {...state, newDescription:action.description}
     default:
       return state

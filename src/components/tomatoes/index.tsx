@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import TomatoAction  from './tomatoAction'
 import TomatoList from './tomatoList'
-import { AbortTomatoes,FetchTomatoes, AddTomatoes } from 'src/store/tomatoes/action'
+import { AbortTomatoes,FetchTomatoes, AddTomatoes,ChangeTomaoDesc } from 'src/store/tomatoes/action'
 
 import './index.scss'
 
@@ -11,16 +11,18 @@ interface IProps{
   FetchTomatoes: ()=>void,
   AbortTomatoes: (id:number,params:any)=>void,
   AddTomatoes: (params:any)=>void,
+  ChangeTomaoDesc:(desc)=>any
   tomatoes: any[],
-  todos:any[]
+  description: string
 }
 
 
-const mapStateToProps =({Tomato,Todo})=>({...Tomato,todos:Todo.todos})
+const mapStateToProps =({Tomato})=>({...Tomato})
 const mapDispatchToProps = {
   AbortTomatoes,
   AddTomatoes,
-  FetchTomatoes
+  FetchTomatoes,
+  ChangeTomaoDesc
 }
 
 class Tomatoes extends React.Component<IProps,any>{
@@ -35,21 +37,15 @@ class Tomatoes extends React.Component<IProps,any>{
     const unAborted = this.props.tomatoes.filter(tomato=>!tomato.aborted)
     return unAborted.filter(tomato=> tomato.description && tomato.ended_at)
   }
-  get currentCompletedTodo(){
-    if(this.unfinishedTomato){
-      return this.props.todos.filter(todo=>new Date(todo.completed_at).getTime() > new Date(this.unfinishedTomato.started_at).getTime())
-        .sort((a,b)=>new Date(b.completed_at).getTime()- new Date(a.completed_at).getTime())
-    }
-    return []
-  }
   render(){
     return (
       <div className="content" id="tomatos">
         <TomatoAction
           abortTomato={this.props.AbortTomatoes}
           addTomato = {this.props.AddTomatoes}
+          changeTomaoDesc = {this.props.ChangeTomaoDesc}
           unfinishedTomato = {this.unfinishedTomato}
-          currentCompletedTodo = {this.currentCompletedTodo}
+          description = {this.props.description}
         />
         <TomatoList finishedTomato ={this.finishedTomato}/>
       </div>
