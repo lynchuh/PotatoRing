@@ -17,7 +17,7 @@ interface IState{
   description: string
 }
 
-export default class TodoItem extends React.Component<IProps,IState>{
+export default class extends React.Component<IProps,IState>{
   constructor(props:IProps){
     super(props)
     this.state = {

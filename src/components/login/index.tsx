@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Input, Button, Form } from 'antd'
-import axios from 'src/config/axios'
+
+import { connect } from 'react-redux'
+import { VerifyUser,Login } from 'src/store/user/action'
 
 import './index.scss'
 
@@ -9,8 +11,23 @@ interface ISignInState {
   account: string,
   password: string,
 }
+interface ISignInProps{
+  VerifyUser:()=>(dispatch)=>Promise<any>
+  Login:(params)=>(dispatch)=>Promise<any>
+  history:any
+}
 
-export default class extends React.Component<any,ISignInState>{
+const mapStateToProps=({UserReducer})=>({
+  ...UserReducer
+})
+const mapDispatchToProps = {
+  VerifyUser,
+  Login
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
+
+export default class extends React.Component<ISignInProps,ISignInState>{
   constructor(props:any){
     super(props)
     this.state = {
@@ -18,30 +35,18 @@ export default class extends React.Component<any,ISignInState>{
       password: '',
     }
   }
-  async componentDidMount(){
-    await this.getCurrentUser()
+  componentDidMount(){
+    this.props.VerifyUser()
   }
   submit= async (e:React.FormEvent<EventTarget>)=>{
     e.preventDefault()
     const {account,password} = this.state
-    try{
-      await axios.post('sign_in/user',{
-        account,
-        password,
-      })
-      this.props.history.push('/')
-    }catch(e){
-      console.error(e)
-    }
+    this.props.Login({account,password})
   }
   changeFormData(target:string,event:any){
     const newVal = {}
     newVal[target] = event.target.value
     this.setState(newVal)
-  }
-  getCurrentUser = async ()=>{
-    const response = await axios.get('/me')
-    if(response) { this.props.history.push('/') }
   }
   public render(){
     const { account,password } = this.state

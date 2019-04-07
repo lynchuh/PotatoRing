@@ -79,7 +79,7 @@ export const ToggleEditId = (id:number)=>({
   type: constants.TOGGLE_EDIT_ID,
 })
 
-export const ChangeNewDesc = (description:string)=>({
+export const ChangeNewTodoDesc = (description:string)=>({
   description,
   type: constants.CHANGE_NEW_TODO_DESCRIPTION
 })

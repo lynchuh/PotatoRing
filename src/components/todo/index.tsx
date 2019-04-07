@@ -2,9 +2,6 @@ import React from 'react'
 import NewTodo from './newTodo'
 import { Collapse,Icon } from 'antd';
 import TodoItem from './todoItem'
-import { connect } from 'react-redux'
-
-import {FetchTodo,AddTodo, ChangeNewDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/actions'
 
 import './index.scss'
 
@@ -13,8 +10,7 @@ interface IConnectProps {
   description: string,
   editingId: number,
   AddTodo: (params)=>void,
-  ChangeNewDesc: ()=>void,
-  FetchTodo: ()=>void,
+  ChangeNewTodoDesc: ()=>void,
   ToggleEditId: ()=>void,
   UpdateTodo: ()=>void,
   CompletedTodo: ()=>void
@@ -31,20 +27,8 @@ const getExtra = () => (
   />
 );
 
-const mapStateToProps = ({Todo})=>({todos:Todo.todos,description:Todo.newDescription,editingId:Todo.editingId})
-const mapDispatchToProps = {
-  AddTodo,
-  ChangeNewDesc,
-  FetchTodo,
-  ToggleEditId,
-  UpdateTodo,
-  CompletedTodo
-}
 
-@connect(mapStateToProps,mapDispatchToProps)
-
-export default class extends React.Component<any,any>{
-  static defaultProps: IConnectProps
+export default class extends React.Component<IConnectProps,any>{
   constructor(props){
     super(props)
   }
@@ -54,15 +38,12 @@ export default class extends React.Component<any,any>{
   get unCompletedTodos(){
     return this.props.todos.filter(todo=>!todo.deleted).filter(todo=>!todo.completed)
   }
-  componentDidMount (){
-    this.props.FetchTodo()
-  }
   public render(){
     return(
       <div id="todo" className='content'>
         <NewTodo
           AddTodo={this.props.AddTodo}
-          ChangeNewDesc= {this.props.ChangeNewDesc}
+          ChangeNewTodoDesc= {this.props.ChangeNewTodoDesc}
           description = {this.props.description}
         />
         <div className="todolist">

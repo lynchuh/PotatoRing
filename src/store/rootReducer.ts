@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import Todo from './todos/reducer'
-import Tomato from './tomatoes/reducer'
+import TodoReducer from './todos/reducer'
+import TomatoReducer from './tomatoes/reducer'
+import UserReducer from './user/reducer'
 
 export default combineReducers({
-  Todo,
-  Tomato
+  TodoReducer,
+  TomatoReducer,
+  UserReducer
 })

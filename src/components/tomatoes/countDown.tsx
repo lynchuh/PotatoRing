@@ -8,6 +8,7 @@ interface IProps {
 interface IState {
   timer: number
 }
+
 let timeId:NodeJS.Timeout
 
 export default class extends React.Component<IProps,IState>{

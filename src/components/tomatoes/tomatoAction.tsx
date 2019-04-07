@@ -15,7 +15,8 @@ interface IProps{
   description: string,
   unfinishedTomato: any,
 }
-export default class TomatoAction extends React.Component<IProps,IState>{
+
+export default class extends React.Component<IProps,IState>{
   constructor(props){
     super(props)
     this.state = {

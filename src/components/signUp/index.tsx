@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Input, Button,Form } from 'antd'
-import axios from 'src/config/axios'
+import {connect} from 'react-redux'
+
+import { VerifyUser,SignUp } from 'src/store/user/action'
 
 interface ISignUpState {
   account: string,
@@ -9,7 +11,21 @@ interface ISignUpState {
   passwordConfirm: string
 }
 
-export default class extends React.Component<any,ISignUpState>{
+interface ISignUpProps{
+  VerifyUser:()=>(dispatch)=>Promise<any>
+  SignUp:(params)=>(dispatch)=>Promise<any>
+}
+
+const mapStateToProps = ()=>({})
+
+const mapDispatchToProps = {
+  VerifyUser,
+  SignUp
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
+
+export default class extends React.Component<ISignUpProps,ISignUpState>{
   constructor(props){
     super(props)
     this.state = {
@@ -18,31 +34,18 @@ export default class extends React.Component<any,ISignUpState>{
       passwordConfirm:''
     }
   }
-  async componentDidMount(){
-    await this.getCurrentUser()
+  componentDidMount(){
+    this.props.VerifyUser()
   }
   submit= async (e)=>{
     e.preventDefault()
     const {account,password,passwordConfirm} = this.state
-    try{
-      await axios.post('sign_up/user',{
-        account,
-        password,
-        password_confirmation: passwordConfirm
-      })
-      this.props.history.push('/')
-    }catch(e){
-      console.error(e)
-    }
+    this.props.SignUp({account,password,password_confirmation: passwordConfirm})
   }
   changeFormData(target:string,event:any){
     const newVal = {}
     newVal[target] = event.target.value
     this.setState(newVal)
-  }
-  getCurrentUser = async ()=>{
-    const response = await axios.get('/me')
-    if(response) { this.props.history.push('/') }
   }
   public render(){
     const { account,password,passwordConfirm } = this.state

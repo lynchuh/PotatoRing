@@ -1,34 +1,51 @@
 import React from 'react'
 import { Menu,Dropdown,Icon } from 'antd'
+import {connect} from 'react-redux'
 
-import axios from 'src/config/axios'
 import Todo from 'src/components/todo'
 import Tomatoes from 'src/components/tomatoes'
+import Statistics from '../statistics'
 import logo from 'src/static/logo.png'
+
+import { VerifyUser,InitData} from 'src/store/user/action'
+import {AddTodo, ChangeNewTodoDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/actions'
+import { AbortTomatoes, AddTomatoes,ChangeTomaoDesc } from 'src/store/tomatoes/action'
+
 
 import './index.scss'
 
-interface IIndexState {
-  userInfo: any,
+// interface IIndexState {
+//   userInfo: any,
+// }
+
+// interface IRouter {
+//   history: any
+// }
+
+const mapStateToProps=({UserReducer,TodoReducer,TomatoReducer})=>({
+  userInfo:UserReducer.userInfo,
+  TomatoReducer,
+  TodoReducer
+})
+const mapDispatchToProps={
+  VerifyUser,
+  InitData,
+  AddTodo,
+  ChangeNewTodoDesc,
+  ToggleEditId,
+  UpdateTodo,
+  CompletedTodo,
+  AbortTomatoes,
+  AddTomatoes,
+  ChangeTomaoDesc
 }
 
-interface IRouter {
-  history: any
-}
+@connect(mapStateToProps,mapDispatchToProps)
 
-export default class extends React.Component<IRouter,IIndexState>{
-  constructor(props:any){
-    super(props)
-    this.state = {
-      userInfo: null
-    }
-  }
-  async componentWillMount(){
-    await this.getCurrentUser()
-  }
-  getCurrentUser = async ()=>{
-    const response = await axios.get('/me')
-    if(!this.state.userInfo) {this.setState({userInfo: response.data})}
+export default class extends React.Component<any,any>{
+  componentWillMount(){
+    this.props.VerifyUser()
+    this.props.InitData()
   }
   logout=()=>{
     localStorage.setItem('xToken','')
@@ -54,14 +71,29 @@ export default class extends React.Component<IRouter,IIndexState>{
           <h1>番茄土豆</h1>
           <Dropdown overlay={menu}>
             <span className='userInfo'>
-              <span className='userName'>{this.state.userInfo ? this.state.userInfo.account:''}</span>
+              <span className='userName'>{this.props.userInfo ? this.props.userInfo.account:''}</span>
               <Icon type="down" />
             </span>
           </Dropdown>
         </header>
         <main>
-          <Tomatoes />
-          <Todo />
+          <Tomatoes
+            {...this.props.TomatoReducer}
+            AbortTomatoes = {this.props.AbortTomatoes}
+            AddTomatoes ={this.props.AddTomatoes}
+            ChangeTomaoDesc ={this.props.ChangeTomaoDesc}
+          />
+          <Todo
+            {...this.props.TodoReducer}
+            AddTodo={this.props.AddTodo}
+            ChangeNewTodoDesc={this.props.ChangeNewTodoDesc}
+            ToggleEditId ={this.props.ToggleEditId}
+            UpdateTodo = {this.props.UpdateTodo}
+            CompletedTodo= {this.props.CompletedTodo}
+          />
+        </main>
+        <main>
+          <Statistics />
         </main>
       </div>
     )

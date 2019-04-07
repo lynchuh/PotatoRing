@@ -8,11 +8,11 @@ interface Istate{
 
 interface IProps {
   AddTodo: (params)=>void,
-  ChangeNewDesc: (desc:string)=>void,
+  ChangeNewTodoDesc: (desc:string)=>void,
   description: string
 }
 
-export default class NewTodo extends React.Component<IProps,Istate>{
+export default class extends React.Component<IProps,Istate>{
   constructor(props){
     super(props)
     this.state = {
@@ -38,7 +38,7 @@ export default class NewTodo extends React.Component<IProps,Istate>{
         <Input className='addTodo' placeholder='添加新任务'
           suffix={suffix}
           value={description}
-          onChange={(e:React.ChangeEvent<HTMLInputElement>)=>this.props.ChangeNewDesc(e.target.value)}
+          onChange={(e:React.ChangeEvent<HTMLInputElement>)=>this.props.ChangeNewTodoDesc(e.target.value)}
           onPressEnter={()=>this.props.AddTodo({description})}
           onFocus = { this.showIcon }
           onBlur = { this.hideIcon }
