@@ -14,14 +14,14 @@ interface IProps{
 class Statistics extends React.Component<IProps,any>{
   liNode: HTMLLIElement | null;
   get completedTodos(){
-    return this.props.todos.filter(todo=>todo.completed)
+    return this.props.todos.filter(todo=>todo.completed && !todo.deleted)
   }
   get completedTomatoes(){
     return this.props.tomatoes.filter(tomato=>!tomato.aborted).filter(tomato=> tomato.description && tomato.ended_at)
   }
-  get dayliyTomatoes(){
+  get dailyTomatoes(){
     const newList = new Map()
-    const dayliyTomatoes = {}
+    const dailyTomatoes = {}
     this.completedTomatoes
       .sort((a,b)=>Date.parse(b.started_at)-Date.parse(a.started_at))
       .forEach(tomato=>{
@@ -31,13 +31,13 @@ class Statistics extends React.Component<IProps,any>{
         newList.set(day,list)
       })
     for(const [key,value] of newList.entries()){
-      dayliyTomatoes[key] = value
+      dailyTomatoes[key] = value
     }
-    return dayliyTomatoes
+    return dailyTomatoes
   }
-  get dayliyTodos(){
+  get dailyTodos(){
     const newList = new Map()
-    const dayliyTodos = {}
+    const dailyTodos = {}
     this.completedTodos
       .sort((a,b)=>Date.parse(b.completed_at)-Date.parse(a.completed_at))
       .forEach(todo=>{
@@ -47,20 +47,14 @@ class Statistics extends React.Component<IProps,any>{
       newList.set(day,list)
     })
     for(const [key,value] of newList.entries()){
-      dayliyTodos[key] = value
+      dailyTodos[key] = value
     }
-    return dayliyTodos
+    return dailyTodos
   }
   public render(){
     return (
       <div className='container' id='statistics'>
         <ul>
-          <li>
-            <span className='title'>统计</span>
-          </li>
-          <li>
-            <span className="title">目标</span>
-          </li>
           <li>
             <div className='desc'>
               <span className="title">番茄历史</span>
@@ -69,7 +63,7 @@ class Statistics extends React.Component<IProps,any>{
             </div>
             {this.completedTomatoes.length !==0 ?
               <Polygon
-                dayliyData={this.dayliyTomatoes}
+                dailyData={this.dailyTomatoes}
                 width={this.liNode ? this.liNode.offsetWidth-2 : 0}
                 YRange ={this.completedTomatoes.length}
               />
@@ -83,7 +77,7 @@ class Statistics extends React.Component<IProps,any>{
             </div>
             {this.completedTodos.length !==0 ?
               <Polygon
-                dayliyData={this.dayliyTodos}
+                dailyData={this.dailyTodos}
                 width={this.liNode ? this.liNode.offsetWidth-2 : 0}
                 YRange ={this.completedTodos.length}
                 />

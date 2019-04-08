@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface IProps{
-  dayliyData: any
+  dailyData: any
   width: number,
   YRange: number
 }
@@ -31,13 +31,13 @@ export default class Polygon extends React.PureComponent<IProps,any> {
   }
   getPoint(){
     const {height,width} = this.state
-    const dates = Object.keys(this.props.dayliyData)
+    const dates = Object.keys(this.props.dailyData)
     const {YRange} = this.props
     const XRange = new Date().getTime() - Date.parse(dates[dates.length-1])
     let lastXPoint = 0
     const points = dates.reduce((a,date)=>{
       const x = (new Date().getTime() - Date.parse(date))/ XRange * width
-      const y = (1 - this.props.dayliyData[date].length/YRange) * height
+      const y = (1 - this.props.dailyData[date].length/YRange) * height
       lastXPoint = x
       return a.concat(` ${x},${y}`)
     },'0,60')

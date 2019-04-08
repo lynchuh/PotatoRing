@@ -1,13 +1,13 @@
 import React from 'react'
 import NewTodo from './newTodo'
-import { Collapse,Icon } from 'antd';
+import { Collapse,Icon,Empty } from 'antd';
 import TodoItem from './todoItem'
 
 import './index.scss'
 
 interface IConnectProps {
   todos:any,
-  description: string,
+  newDescription: string,
   editingId: number,
   AddTodo: (params)=>void,
   ChangeNewTodoDesc: ()=>void,
@@ -44,11 +44,11 @@ export default class extends React.Component<IConnectProps,any>{
         <NewTodo
           AddTodo={this.props.AddTodo}
           ChangeNewTodoDesc= {this.props.ChangeNewTodoDesc}
-          description = {this.props.description}
+          description = {this.props.newDescription}
         />
         <div className="todolist">
           {
-            this.unCompletedTodos.map(item=>(
+            this.unCompletedTodos.length !==0 ? this.unCompletedTodos.map(item=>(
               <TodoItem
                 key={item.id}
                 description={item.description}
@@ -60,25 +60,30 @@ export default class extends React.Component<IConnectProps,any>{
                 completedTodo = {this.props.CompletedTodo}
               />
             ))
+            : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
           }
-          <Collapse bordered={false} defaultActiveKey={['1']}>
-            <Panel header="最近完成任务" key="1" extra={getExtra()}>
-            {
-              this.completedTodos.map(item=>(
-                <TodoItem
-                  key={item.id}
-                  description={item.description}
-                  id={item.id}
-                  completed={item.completed}
-                  editingId={this.props.editingId}
-                  updateTodo = {this.props.UpdateTodo}
-                  toggleEditId={this.props.ToggleEditId}
-                  completedTodo ={this.props.CompletedTodo}
-                />
-              ))
-            }
-            </Panel>
-          </Collapse>
+          {
+            this.completedTodos.length !==0 ?
+            <Collapse bordered={false} defaultActiveKey={['0']}>
+              <Panel header="最近完成任务" key="1" extra={getExtra()}>
+              {
+                  this.completedTodos.map(item=>(
+                  <TodoItem
+                    key={item.id}
+                    description={item.description}
+                    id={item.id}
+                    completed={item.completed}
+                    editingId={this.props.editingId}
+                    updateTodo = {this.props.UpdateTodo}
+                    toggleEditId={this.props.ToggleEditId}
+                    completedTodo ={this.props.CompletedTodo}
+                  />
+                ))
+              }
+              </Panel>
+            </Collapse>
+            :null
+          }
 
         </div>
       </div>

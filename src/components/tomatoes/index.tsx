@@ -7,12 +7,12 @@ import './index.scss'
 
 export default class extends React.Component<any,any>{
   get unfinishedTomato(){
-    const unAborted = this.props.tomatoes.filter(tomato=>!tomato.aborted)
-    return unAborted.filter(tomato=>!tomato.description && !tomato.ended_at)[0]
+    return this.props.tomatoes.filter(tomato=>!tomato.aborted && !tomato.description && !tomato.ended_at)[0]
   }
   get finishedTomato(){
-    const unAborted = this.props.tomatoes.filter(tomato=>!tomato.aborted)
-    return unAborted.filter(tomato=> tomato.description && tomato.ended_at)
+    return (this.props.tomatoes
+      .filter(tomato=> !tomato.aborted && tomato.description && tomato.ended_at)
+      .slice(0,8))
   }
   render(){
     return (
