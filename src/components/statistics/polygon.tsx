@@ -1,27 +1,65 @@
 import React from 'react'
 
+interface IProps{
+  dayliyData: any
+  width: number,
+  YRange: number
+}
 
-const Polygon = (props)=>{
-  const {dayliyData} = props
-  let data = []
-  if(dayliyData){
-    data = dayliyData
+// let lastTime:number|null = null;
+
+export default class Polygon extends React.PureComponent<IProps,any> {
+  node: HTMLDivElement | null;
+  constructor(props){
+    super(props)
+    this.state={
+      height: 60,
+      width: this.props.width,
+    }
+    this.updateSize = this.updateSize.bind(this)
   }
-  return (
-    <div className="polygon">
-      <svg className='peity' width="100%" height="60" preserveAspectRatio ="none">
-        <polygon fill="rgba(215,78,78,0.1)"
-          stroke="rgba(215,78,78,0.5)"
-          strokeWidth="1"
-          points={Polygon.getPoint(data)}/>
-      </svg>
-    </div>
-  )
+  componentDidMount(){
+    window.addEventListener('resize', this.updateSize);
+  }
+  componentWillUnmount(){
+    window.removeEventListener('resize', this.updateSize);
+  }
+  updateSize(){
+    const width = this.node? this.node.offsetWidth: 0
+    const height = this.node? this.node.offsetHeight: 0
+    if(this.state.width !==width || this.state.height !== height){this.setState({ width, height })}
+  }
+  getPoint(){
+    const {height,width} = this.state
+    const dates = Object.keys(this.props.dayliyData)
+    const {YRange} = this.props
+    const XRange = new Date().getTime() - Date.parse(dates[dates.length-1])
+    let lastXPoint = 0
+    const points = dates.reduce((a,date)=>{
+      const x = (new Date().getTime() - Date.parse(date))/ XRange * width
+      const y = (1 - this.props.dayliyData[date].length/YRange) * height
+      lastXPoint = x
+      return a.concat(` ${x},${y}`)
+    },'0,60')
+    return points.concat(` ${lastXPoint},60`)
+  }
+  public render() {
+    return (
+      <div className="polygon" ref={node=>this.node = node}>
+        <svg
+          className="peity"
+          width="100%"
+          height="60"
+          preserveAspectRatio="none"
+        >
+          <polygon
+            fill="rgba(215,78,78,0.1)"
+            stroke="rgba(215,78,78,0.5)"
+            strokeWidth="1"
+            points={this.getPoint()}
+          />
+        </svg>
+      </div>
+    )
+  }
 }
-
-Polygon.getPoint = (data)=>{
-  return  "0 59.5 0 59.5 17.967741935483872 59.5 35.935483870967744 59.5 53.903225806451616 59.5 71.87096774193549 59.5 89.83870967741936 59.5 107.80645161290323 59.5 125.7741935483871 59.5 143.74193548387098 59.5 161.70967741935485 59.5 179.67741935483872 59.5 197.6451612903226 57.71212121212121 215.61290322580646 57.71212121212121 233.58064516129033 18.378787878787875 251.5483870967742 18.378787878787875 269.51612903225805 18.378787878787875 287.48387096774195 18.378787878787875 305.45161290322585 18.378787878787875 323.4193548387097 14.803030303030305 341.38709677419354 11.227272727272727 359.35483870967744 11.227272727272727 377.32258064516134 11.227272727272727 395.2903225806452 11.227272727272727 413.258064516129 9.439393939393938 431.2258064516129 9.439393939393938 449.1935483870968 9.439393939393938 467.16129032258067 9.439393939393938 485.1290322580645 4.075757575757571 503.0967741935484 4.075757575757571 521.0645161290323 2.287878787878789 539.0322580645161 2.287878787878789 557 0.5 557 59.5"
-}
-
-
-export default Polygon

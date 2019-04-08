@@ -8,6 +8,7 @@
 
 #statistics ul li {
   flex: 1;
+  display: flex;
   width: 25%;
   border: 1px solid #e4e4e4;
   cursor: pointer;
@@ -25,12 +26,9 @@
 }
 
 #statistics ul li .polygon {
-  display: flex;
   width: 100%;
-}
-
-#statistics ul li .polygon .peity {
-  align-items: flex-end;
+  height: 60px;
+  align-self: flex-end;
 }
 
 #statistics ul li .polygon .peity:not(:root) {

@@ -15,7 +15,7 @@ export default (state=initState,action)=>{
   .filter(tomato=>!tomato.aborted)
   .filter(tomato=>!tomato.description && !tomato.ended_at)[0]
   switch(action.type){
-    case constants.FETCH_TODOS_SUCCESS: // ∵ tomato组件先渲染
+    case constants.FETCH_TODOS_SUCCESS: 
     let desc = ''
     if(unfinishedTomato){
       desc = action.data
