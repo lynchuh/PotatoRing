@@ -21,7 +21,7 @@ export default (state=initState,action)=>{
       desc = action.data
         .filter(todo=>!todo.deleted)
         .filter(todo=>todo.completed)
-        .filter(todo=>new Date(todo.completed_at).getTime() - new Date(unfinishedTomato.started_at).getTime() >0)
+        .filter(todo=>Date.parse(todo.completed_at) - Date.parse(unfinishedTomato.started_at) > 0)
         .reduce((a,b)=>a.concat(`${b.description}+`),'')
         .slice(0,-1)
     }

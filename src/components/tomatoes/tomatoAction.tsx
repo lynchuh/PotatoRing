@@ -28,7 +28,7 @@ export default class extends React.Component<IProps,IState>{
       return (<Button className='startButton' onClick={()=>this.props.addTomato({duration:1500000})}>开始番茄</Button>)
     }
     const {duration,created_at,id} = this.props.unfinishedTomato
-    const start = new Date(created_at).getTime()
+    const start = Date.parse(created_at)
     const current = new Date().getTime()
     const suffix = <Icon type="enter"
       onClick={()=>this.props.abortTomato(id,{description:this.props.description,ended_at: new Date()})}

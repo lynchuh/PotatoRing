@@ -12,7 +12,7 @@ export default class extends React.Component<IProps>{
       const day = dayJs(tomato.started_at).format('YYYY-MM-DD')
       const list =newList.get(day) || []
       list.push(tomato)
-      list.sort((a,b)=>new Date(b.started_at).getTime()-new Date(a.started_at).getTime()) // 按时间排序
+      list.sort((a,b)=>Date.parse(b.started_at)-Date.parse(a.started_at)) // 按时间排序
       newList.set(day,list)
     })
     return newList.entries()

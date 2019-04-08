@@ -2,8 +2,9 @@ import React from 'react'
 import { Menu,Dropdown,Icon } from 'antd'
 import {connect} from 'react-redux'
 
-import Todo from 'src/components/todo'
-import Tomatoes from 'src/components/tomatoes'
+// import Todo from 'src/components/todo'
+// import Tomatoes from 'src/components/tomatoes'
+
 import Statistics from '../statistics'
 import logo from 'src/static/logo.png'
 
@@ -76,7 +77,7 @@ export default class extends React.Component<any,any>{
             </span>
           </Dropdown>
         </header>
-        <main>
+        {/* <main>
           <Tomatoes
             {...this.props.TomatoReducer}
             AbortTomatoes = {this.props.AbortTomatoes}
@@ -91,9 +92,12 @@ export default class extends React.Component<any,any>{
             UpdateTodo = {this.props.UpdateTodo}
             CompletedTodo= {this.props.CompletedTodo}
           />
-        </main>
+        </main> */}
         <main>
-          <Statistics />
+          <Statistics
+            tomatoes={this.props.TomatoReducer.tomatoes}
+            todos= {this.props.TodoReducer.todos }
+          />
         </main>
       </div>
     )

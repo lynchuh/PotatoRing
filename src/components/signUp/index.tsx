@@ -16,12 +16,8 @@ interface ISignUpProps{
   SignUp:(params)=>(dispatch)=>Promise<any>
 }
 
-const mapStateToProps = ()=>({})
-
-const mapDispatchToProps = {
-  VerifyUser,
-  SignUp
-}
+const mapDispatchToProps = {VerifyUser,SignUp}
+const mapStateToProps= ()=>({})
 
 @connect(mapStateToProps,mapDispatchToProps)
 

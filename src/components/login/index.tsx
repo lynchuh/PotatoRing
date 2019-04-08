@@ -16,10 +16,8 @@ interface ISignInProps{
   Login:(params)=>(dispatch)=>Promise<any>
   history:any
 }
+const mapStateToProps= ()=>({})
 
-const mapStateToProps=({UserReducer})=>({
-  ...UserReducer
-})
 const mapDispatchToProps = {
   VerifyUser,
   Login
@@ -38,7 +36,7 @@ export default class extends React.Component<ISignInProps,ISignInState>{
   componentDidMount(){
     this.props.VerifyUser()
   }
-  submit= async (e:React.FormEvent<EventTarget>)=>{
+  submit= (e:React.FormEvent<EventTarget>)=>{
     e.preventDefault()
     const {account,password} = this.state
     this.props.Login({account,password})
