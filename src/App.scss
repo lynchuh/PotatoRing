@@ -12,6 +12,9 @@
         margin:.8em 0;
       }
     }
+    header,main{
+      min-width: 300px;
+    }
   }
 }
 *{box-sizing: border-box;margin:0;padding: 0; }
@@ -22,7 +25,9 @@ body {
   font-family: sans-serif;
   background: #FDFDFD;
 }
-
+.ant-empty {
+  margin: 8px;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

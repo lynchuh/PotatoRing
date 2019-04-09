@@ -21,6 +21,11 @@
     .ant-collapse{
       .ant-collapse-content-box{
         padding: 0;
+        .todoItem{
+          &:last-child{
+            border-bottom: none;
+          }
+        }
       }
       .ant-collapse-header{
         text-align: left

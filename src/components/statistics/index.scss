@@ -17,6 +17,9 @@
       color: #666;
       position: relative;
       box-shadow: 0 2px 0 rgba(225,225,225,.2);
+      &.active{
+        background-color: #F4F4F4;
+      }
       &:not(:first-child) {
         margin-left: -1px;
       }
@@ -60,7 +63,7 @@
     ul {
       flex-direction: column;
       li {
-        width: calc(100vw - 32px);
+        width: 100%;
         &:not(:first-child) {
           margin-top: -1px;
           margin-left: 0;

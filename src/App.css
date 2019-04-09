@@ -18,6 +18,10 @@
   margin: .8em 0;
 }
 
+.App .container header, .App .container main {
+  min-width: 300px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,6 +37,10 @@ body {
   padding: 0;
   font-family: sans-serif;
   background: #FDFDFD;
+}
+
+.ant-empty {
+  margin: 8px;
 }
 
 @keyframes App-logo-spin {

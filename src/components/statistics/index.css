@@ -23,6 +23,10 @@
   box-shadow: 0 2px 0 rgba(225, 225, 225, 0.2);
 }
 
+#statistics ul li.active {
+  background-color: #F4F4F4;
+}
+
 #statistics ul li:not(:first-child) {
   margin-left: -1px;
 }
@@ -68,7 +72,7 @@
     flex-direction: column;
   }
   #statistics ul li {
-    width: calc(100vw - 32px);
+    width: 100%;
   }
   #statistics ul li:not(:first-child) {
     margin-top: -1px;

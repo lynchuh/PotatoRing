@@ -1,4 +1,5 @@
 import React from 'react'
+import { Empty } from 'antd'
 import dayJs from 'dayjs'
 
 interface IProps{
@@ -44,7 +45,7 @@ export default class extends React.Component<IProps>{
   public render(){
     return (
       <div className='tomato_list'>
-        {this.tomatoListHtml}
+        {this.props.finishedTomato.length !==0 ?this.tomatoListHtml:<Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> }
       </div>
     )
   }

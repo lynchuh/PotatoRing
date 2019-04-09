@@ -2,6 +2,7 @@ import React from 'react'
 import dayJs from 'dayjs'
 
 import Polygon from './polygon'
+import TodoHistory from './todoHistory'
 
 import './index.scss'
 
@@ -51,11 +52,25 @@ class Statistics extends React.Component<IProps,any>{
     }
     return dailyTodos
   }
+  constructor(props){
+    super(props)
+    this.state = {
+      activeId: -1
+    }
+  }
+  toggleActivePane(index){
+    if(this.state.activeId!==index){
+      this.setState({
+        activeId: index
+      })
+    }
+  }
+
   public render(){
     return (
       <div className='container' id='statistics'>
         <ul>
-          <li>
+          <li ref={li=>this.liNode=li} className={this.state.activeId === 0 ? 'active': '' } onClick={this.toggleActivePane.bind(this,0)}>
             <div className='desc'>
               <span className="title">番茄历史</span>
               <span className='subtitle'>累计完成番茄</span>
@@ -69,7 +84,7 @@ class Statistics extends React.Component<IProps,any>{
               />
               : null}
           </li>
-          <li ref={li=>this.liNode=li}>
+          <li className={this.state.activeId === 1 ? 'active': '' } onClick={this.toggleActivePane.bind(this,1)}>
             <div className='desc'>
               <span className="title">任务历史</span>
               <span className='subtitle'>累计完成任务</span>
@@ -84,6 +99,19 @@ class Statistics extends React.Component<IProps,any>{
               : null}
           </li>
         </ul>
+        <TodoHistory todos={this.props.todos}/>
+        {/* {this.state.activeId=== 0 ?
+          <div>
+            番茄
+          </div>
+          : null
+        }
+        {this.state.activeId=== 1 ?
+          <div>
+            任务
+          </div>
+          : null
+        } */}
       </div>
     )
   }

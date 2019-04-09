@@ -25,6 +25,10 @@
   padding: 0;
 }
 
+#todo .todolist .ant-collapse .ant-collapse-content-box .todoItem:last-child {
+  border-bottom: none;
+}
+
 #todo .todolist .ant-collapse .ant-collapse-header {
   text-align: left;
 }

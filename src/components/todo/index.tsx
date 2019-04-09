@@ -1,6 +1,7 @@
 import React from 'react'
+import dayJs from 'dayjs'
+import { Collapse,Empty } from 'antd';
 import NewTodo from './newTodo'
-import { Collapse,Icon,Empty } from 'antd';
 import TodoItem from './todoItem'
 
 import './index.scss'
@@ -17,79 +18,62 @@ interface IConnectProps {
 }
 
 const {Panel} = Collapse
-const getExtra = () => (
-  <Icon
-    type="close-circle"
-    onClick={(event) => {
-      event.stopPropagation();
-      console.log('clean')
-    }}
-  />
-);
 
-
-export default class extends React.Component<IConnectProps,any>{
-  constructor(props){
-    super(props)
-  }
-  get completedTodos(){
-    return this.props.todos.filter(todo=>!todo.deleted).filter(todo=>todo.completed)
-  }
-  get unCompletedTodos(){
-    return this.props.todos.filter(todo=>!todo.deleted).filter(todo=>!todo.completed)
-  }
-  public render(){
-    return(
-      <div id="todo" className='content'>
-        <NewTodo
-          AddTodo={this.props.AddTodo}
-          ChangeNewTodoDesc= {this.props.ChangeNewTodoDesc}
-          description = {this.props.newDescription}
-        />
-        <div className="todolist">
+export default (props:IConnectProps)=>{
+  const completedTodos = props.todos
+    .filter(todo=>!todo.deleted)
+    .filter(todo=>todo.completed)
+    .filter(todo=>dayJs(todo.completed_at).format('YYYY-MM-DD') === dayJs().format('YYYY-MM-DD'))
+  const unCompletedTodos = props.todos
+    .filter(todo=>!todo.deleted)
+    .filter(todo=>!todo.completed)
+  return(
+    <div id="todo" className='content'>
+    <NewTodo
+      AddTodo={props.AddTodo}
+      ChangeNewTodoDesc= {props.ChangeNewTodoDesc}
+      description = {props.newDescription}
+    />
+    <div className="todolist">
+      {
+        unCompletedTodos.length !==0 ? unCompletedTodos.map(item=>(
+          <TodoItem
+            key={item.id}
+            description={item.description}
+            id={item.id}
+            completed={item.completed}
+            editingId={props.editingId}
+            updateTodo = {props.UpdateTodo}
+            toggleEditId={props.ToggleEditId}
+            completedTodo = {props.CompletedTodo}
+          />
+        ))
+        : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+      }
+      {
+        completedTodos.length !==0 ?
+        <Collapse bordered={false} defaultActiveKey={['1']}>
+          <Panel header="最近完成任务" key="1" >
           {
-            this.unCompletedTodos.length !==0 ? this.unCompletedTodos.map(item=>(
+              completedTodos.map(item=>(
               <TodoItem
                 key={item.id}
                 description={item.description}
                 id={item.id}
                 completed={item.completed}
-                editingId={this.props.editingId}
-                updateTodo = {this.props.UpdateTodo}
-                toggleEditId={this.props.ToggleEditId}
-                completedTodo = {this.props.CompletedTodo}
+                editingId={props.editingId}
+                updateTodo = {props.UpdateTodo}
+                toggleEditId={props.ToggleEditId}
+                completedTodo ={props.CompletedTodo}
               />
             ))
-            : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
           }
-          {
-            this.completedTodos.length !==0 ?
-            <Collapse bordered={false} defaultActiveKey={['0']}>
-              <Panel header="最近完成任务" key="1" extra={getExtra()}>
-              {
-                  this.completedTodos.map(item=>(
-                  <TodoItem
-                    key={item.id}
-                    description={item.description}
-                    id={item.id}
-                    completed={item.completed}
-                    editingId={this.props.editingId}
-                    updateTodo = {this.props.UpdateTodo}
-                    toggleEditId={this.props.ToggleEditId}
-                    completedTodo ={this.props.CompletedTodo}
-                  />
-                ))
-              }
-              </Panel>
-            </Collapse>
-            :null
-          }
-
-        </div>
-      </div>
-    )
-  }
+          </Panel>
+        </Collapse>
+        :null
+      }
+    </div>
+  </div>
+  )
 }
-
-
 
