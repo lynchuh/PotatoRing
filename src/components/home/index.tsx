@@ -88,6 +88,8 @@ export default class extends React.Component<any,any>{
         <Statistics
           tomatoes={this.props.TomatoReducer.tomatoes}
           todos= {this.props.TodoReducer.todos }
+          UpdateTodo = {this.props.UpdateTodo}
+          CompletedTodo = {this.props.CompletedTodo}
         />
       </div>
     )

@@ -7,6 +7,8 @@ import DeletedTodos from './deletedTodos'
 interface IProps {
   deletedTodos:any[]
   dailyTodos:any
+  UpdateTodo: (id,params)=>void
+  CompletedTodo: (id,params)=>void
 }
 const TabPane = Tabs.TabPane;
 
@@ -23,6 +25,9 @@ export default class extends React.PureComponent<IProps,any>{
       this.setState({tabKey})
     }
   }
+  togglePage=(currentPage:number)=>{
+    this.setState({currentPage})
+  }
   get dailyHtml(){
     const week = ['周日','周一','周二','周三','周四','周五','周六']
     const {currentPage} = this.state
@@ -36,12 +41,19 @@ export default class extends React.PureComponent<IProps,any>{
           </div>
           <span className='desc'>{`完成了${dailyTodos[date].length }个任务`}</span>
         </div>
-        <TodoList list={dailyTodos[date]} />
+        <TodoList
+          list={dailyTodos[date]}
+          recoverAction={this.turnToUncompleted}
+          deleteAction={this.props.UpdateTodo}
+        />
       </div>
     ))
   }
-  togglePage=(currentPage:number)=>{
-    this.setState({currentPage})
+  turnToUncompleted=(item)=>{
+    this.props.CompletedTodo(item.id,{completed:false})
+  }
+  turnToUndeleted=(item)=>{
+    this.props.UpdateTodo(item.id,{deleted:false})
   }
   public render(){
     return (
@@ -67,7 +79,7 @@ export default class extends React.PureComponent<IProps,any>{
             </div>
           </TabPane>
           <TabPane tab="已删除的任务" key="2">
-            <DeletedTodos todos={this.props.deletedTodos}/>
+            <DeletedTodos todos={this.props.deletedTodos} turnToUndeleted={this.turnToUndeleted}/>
           </TabPane>
         </Tabs>
       </div>

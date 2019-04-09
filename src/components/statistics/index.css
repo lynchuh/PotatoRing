@@ -109,11 +109,27 @@
 }
 
 #statistics .todo_history .itemlist .item {
-  padding: 8px;
+  padding: 8px 66px 8px 8px;
+  position: relative;
+}
+
+#statistics .todo_history .itemlist .item .action_wrapper {
+  display: none;
+  position: absolute;
+  right: 0;
+}
+
+#statistics .todo_history .itemlist .item .action_wrapper span {
+  margin-right: 8px;
+  cursor: pointer;
 }
 
 #statistics .todo_history .itemlist .item:hover {
   background: #f4f4f4;
+}
+
+#statistics .todo_history .itemlist .item:hover .action_wrapper {
+  display: inline;
 }
 
 #statistics .todo_history .itemlist .item .date_time {

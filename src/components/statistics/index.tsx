@@ -9,6 +9,8 @@ import './index.scss'
 interface IProps{
   tomatoes: any[]
   todos: any[]
+  UpdateTodo: (id,params)=>(dispatch)=>Promise<any>
+  CompletedTodo: (id,params)=>(dispatch)=>Promise<any>
 }
 
 
@@ -112,22 +114,22 @@ class Statistics extends React.Component<IProps,any>{
               : null}
           </li>
         </ul>
-        <TodoHistory
-          deletedTodos={this.props.todos.filter(todo=>todo.deleted)}
-          dailyTodos = {this.dailyTodos}
-        />
-        {/* {this.state.activeId=== 0 ?
-          <div>
-            番茄
-          </div>
-          : null
-        }
-        {this.state.activeId=== 1 ?
+        {this.state.activeId=== 0 ?
           <div>
             任务
           </div>
           : null
-        } */}
+        }
+        {this.state.activeId=== 1 ?
+          <TodoHistory
+            deletedTodos={this.props.todos.filter(todo=>todo.deleted)}
+            dailyTodos = {this.dailyTodos}
+            UpdateTodo = {this.props.UpdateTodo}
+            CompletedTodo = {this.props.CompletedTodo}
+          />
+          : null
+        }
+
       </main>
     )
   }

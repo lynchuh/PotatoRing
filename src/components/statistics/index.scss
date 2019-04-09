@@ -93,15 +93,29 @@
       flex-direction: column;
       flex: 1;
       .item{
-        padding: 8px;
+        padding: 8px 66px 8px 8px;
+        position: relative;
+        .action_wrapper{
+          display: none;
+          position: absolute;
+          right: 0;
+          span{
+            margin-right: 8px;
+            cursor: pointer;
+          }
+        }
         &:hover{
           background: #f4f4f4;
+          .action_wrapper{
+            display: inline;
+          }
         }
         .date_time{
           color:#888;
           margin-right: 12px;
         }
       }
+
     }
     .Pagination_wrapper{
       display: flex;

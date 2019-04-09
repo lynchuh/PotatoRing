@@ -10,6 +10,8 @@ const DeletedTodos = (props)=>{
     <Fragment>
       <TodoList
         list ={props.todos.slice((current-1)*pageSize,current*pageSize)}
+        recoverAction={props.turnToUndeleted}
+        deleteAction={()=>void 0}
       />
       <div className='Pagination_wrapper'>
         <Pagination defaultCurrent={1} total={props.todos.length} current={current} pageSize={pageSize} onChange={DeletedTodos.changePage.bind(undefined,setCurrent)}/>
