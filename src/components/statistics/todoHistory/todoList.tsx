@@ -1,6 +1,5 @@
 import React from 'react'
 import dayJs from 'dayjs'
-// import {Icon} from 'antd'
 
 export default (props)=>{
   return(

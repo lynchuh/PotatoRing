@@ -115,7 +115,87 @@
           margin-right: 12px;
         }
       }
-
+    }
+    .Pagination_wrapper{
+      display: flex;
+      margin: 32px 0 16px;
+      .tips{
+        color: #888;
+        margin-left: auto;
+      }
+    }
+  }
+  .tomato_history{
+    text-align: left;
+    border-radius: 4px;
+    border: 1px solid #DDD;
+    box-shadow: 0 2px 0 rgba(225,225,225,.2);
+    padding: 16px;
+    .daily_tomatoes{
+      font-size: 14px;
+      border: 1px solid #DDD;
+      border-radius: 3px;
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+      margin-bottom: .6em;
+      padding: .9em;
+      display: flex;
+      .title{
+        display: flex;
+        flex-direction: column;
+        color: #888;
+        width: 30%;
+        .date{
+          .date_time{
+            color: #222;
+            margin-right: 8px;
+          }
+        }
+        .daily_statistic{
+          line-height: 1.5;
+          margin-top: 8px;
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      .itemlist{
+        width:70%;
+      }
+    }
+    .itemlist{
+      display: flex;
+      flex-direction: column;
+      .item{
+        padding: 8px 72px 8px 8px;
+        position: relative;
+        display:flex;
+        align-items: center;
+        span{
+          min-height: 32px;
+          line-height: 32px;
+        }
+        .ant-input{
+          flex:1;
+        }
+        .action_wrapper{
+          display: none;
+          position: absolute;
+          right: 0;
+          span{
+            margin-right: 8px;
+            cursor: pointer;
+          }
+        }
+        &:hover{
+          background: #f4f4f4;
+          .action_wrapper{
+            display: inline;
+          }
+        }
+        .date_time{
+          color:#888;
+          margin:0 12px;
+        }
+      }
     }
     .Pagination_wrapper{
       display: flex;
@@ -165,6 +245,42 @@
             margin-top:0;
             margin-left: 8px;
             line-height: 1;
+          }
+        }
+      }
+    }
+    .tomato_history{
+      .daily_tomatoes{
+        flex-direction: column;
+        .title{
+          flex-direction: row;
+          width: 100%;
+          border-bottom: 1px solid #DDD;
+          padding-bottom: 8px;
+          font-size: 12px;
+          align-items: center;
+          flex:0;
+          .date{
+            .date_time{
+              font-size: 14px;
+            }
+          }
+          .daily_statistic{
+            margin-top:0;
+            margin-left: 8px;
+            line-height: 1;
+            flex-direction: row;
+            span{
+              &:first-child{
+                margin-right: 4px;
+              }
+            }
+          }
+        }
+        .itemlist{
+          width: 100%;
+          .item{
+          width: 100%;
           }
         }
       }

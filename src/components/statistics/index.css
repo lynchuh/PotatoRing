@@ -147,6 +147,102 @@
   margin-left: auto;
 }
 
+#statistics .tomato_history {
+  text-align: left;
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  box-shadow: 0 2px 0 rgba(225, 225, 225, 0.2);
+  padding: 16px;
+}
+
+#statistics .tomato_history .daily_tomatoes {
+  font-size: 14px;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom: .6em;
+  padding: .9em;
+  display: flex;
+}
+
+#statistics .tomato_history .daily_tomatoes .title {
+  display: flex;
+  flex-direction: column;
+  color: #888;
+  width: 30%;
+}
+
+#statistics .tomato_history .daily_tomatoes .title .date .date_time {
+  color: #222;
+  margin-right: 8px;
+}
+
+#statistics .tomato_history .daily_tomatoes .title .daily_statistic {
+  line-height: 1.5;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+#statistics .tomato_history .daily_tomatoes .itemlist {
+  width: 70%;
+}
+
+#statistics .tomato_history .itemlist {
+  display: flex;
+  flex-direction: column;
+}
+
+#statistics .tomato_history .itemlist .item {
+  padding: 8px 72px 8px 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#statistics .tomato_history .itemlist .item span {
+  min-height: 32px;
+  line-height: 32px;
+}
+
+#statistics .tomato_history .itemlist .item .ant-input {
+  flex: 1;
+}
+
+#statistics .tomato_history .itemlist .item .action_wrapper {
+  display: none;
+  position: absolute;
+  right: 0;
+}
+
+#statistics .tomato_history .itemlist .item .action_wrapper span {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+#statistics .tomato_history .itemlist .item:hover {
+  background: #f4f4f4;
+}
+
+#statistics .tomato_history .itemlist .item:hover .action_wrapper {
+  display: inline;
+}
+
+#statistics .tomato_history .itemlist .item .date_time {
+  color: #888;
+  margin: 0 12px;
+}
+
+#statistics .tomato_history .Pagination_wrapper {
+  display: flex;
+  margin: 32px 0 16px;
+}
+
+#statistics .tomato_history .Pagination_wrapper .tips {
+  color: #888;
+  margin-left: auto;
+}
+
 @media (max-width: 760px) {
   #statistics .graph {
     flex-direction: column;
@@ -182,5 +278,35 @@
     margin-top: 0;
     margin-left: 8px;
     line-height: 1;
+  }
+  #statistics .tomato_history .daily_tomatoes {
+    flex-direction: column;
+  }
+  #statistics .tomato_history .daily_tomatoes .title {
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 8px;
+    font-size: 12px;
+    align-items: center;
+    flex: 0;
+  }
+  #statistics .tomato_history .daily_tomatoes .title .date .date_time {
+    font-size: 14px;
+  }
+  #statistics .tomato_history .daily_tomatoes .title .daily_statistic {
+    margin-top: 0;
+    margin-left: 8px;
+    line-height: 1;
+    flex-direction: row;
+  }
+  #statistics .tomato_history .daily_tomatoes .title .daily_statistic span:first-child {
+    margin-right: 4px;
+  }
+  #statistics .tomato_history .daily_tomatoes .itemlist {
+    width: 100%;
+  }
+  #statistics .tomato_history .daily_tomatoes .itemlist .item {
+    width: 100%;
   }
 }

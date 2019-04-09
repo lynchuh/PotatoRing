@@ -2,7 +2,8 @@ import React from 'react'
 import dayJs from 'dayjs'
 
 import Polygon from './polygon'
-import TodoHistory from './todoHistory'
+// import TodoHistory from './todoHistory'
+import TomatoHistory from './tomatoHistory'
 
 import './index.scss'
 
@@ -114,13 +115,17 @@ class Statistics extends React.Component<IProps,any>{
               : null}
           </li>
         </ul>
-        {this.state.activeId=== 0 ?
+        <TomatoHistory
+          dailyTomatoes = {this.dailyTomatoes}
+          abortTomatoes={this.props.tomatoes.filter(tomato=>tomato.aborted && !tomato.description)}
+        />
+        {/* {this.state.activeId=== 0 ?
           <div>
             任务
           </div>
           : null
-        }
-        {this.state.activeId=== 1 ?
+        } */}
+        {/* {this.state.activeId=== 1 ?
           <TodoHistory
             deletedTodos={this.props.todos.filter(todo=>todo.deleted)}
             dailyTodos = {this.dailyTodos}
@@ -128,7 +133,7 @@ class Statistics extends React.Component<IProps,any>{
             CompletedTodo = {this.props.CompletedTodo}
           />
           : null
-        }
+        } */}
 
       </main>
     )

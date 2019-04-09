@@ -94,4 +94,5 @@
 
 #tomatos .tomato_list .days_tomatoes .tomatoes_wrapper .tomato_item .desc {
   color: #000;
+  text-align: left;
 }
