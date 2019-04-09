@@ -55,8 +55,10 @@ class Statistics extends React.Component<IProps,any>{
   constructor(props){
     super(props)
     this.state = {
-      activeId: -1
+      activeId: -1,
+      width: this.liNode?this.liNode.offsetWidth-2 : 0
     }
+    this.updateSize = this.updateSize.bind(this)
   }
   toggleActivePane(index){
     if(this.state.activeId!==index){
@@ -65,11 +67,22 @@ class Statistics extends React.Component<IProps,any>{
       })
     }
   }
+  updateSize(){
+    const width = this.liNode? this.liNode.offsetWidth-2: 0
+    if(this.state.width !==width){this.setState({ width })}
+  }
+  componentDidMount(){
+    this.updateSize()
+    window.addEventListener('resize', this.updateSize);
+  }
+  componentWillUnmount(){
+    window.removeEventListener('resize', this.updateSize);
+  }
 
   public render(){
     return (
-      <div className='container' id='statistics'>
-        <ul>
+      <main id='statistics'>
+        <ul className='graph'>
           <li ref={li=>this.liNode=li} className={this.state.activeId === 0 ? 'active': '' } onClick={this.toggleActivePane.bind(this,0)}>
             <div className='desc'>
               <span className="title">番茄历史</span>
@@ -79,7 +92,7 @@ class Statistics extends React.Component<IProps,any>{
             {this.completedTomatoes.length !==0 ?
               <Polygon
                 dailyData={this.dailyTomatoes}
-                width={this.liNode ? this.liNode.offsetWidth-2 : 0}
+                width={this.state.width}
                 YRange ={this.completedTomatoes.length}
               />
               : null}
@@ -93,13 +106,16 @@ class Statistics extends React.Component<IProps,any>{
             {this.completedTodos.length !==0 ?
               <Polygon
                 dailyData={this.dailyTodos}
-                width={this.liNode ? this.liNode.offsetWidth-2 : 0}
+                width={this.state.width}
                 YRange ={this.completedTodos.length}
                 />
               : null}
           </li>
         </ul>
-        <TodoHistory todos={this.props.todos}/>
+        <TodoHistory
+          deletedTodos={this.props.todos.filter(todo=>todo.deleted)}
+          dailyTodos = {this.dailyTodos}
+        />
         {/* {this.state.activeId=== 0 ?
           <div>
             番茄
@@ -112,7 +128,7 @@ class Statistics extends React.Component<IProps,any>{
           </div>
           : null
         } */}
-      </div>
+      </main>
     )
   }
 }

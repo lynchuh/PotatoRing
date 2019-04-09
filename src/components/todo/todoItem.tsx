@@ -42,7 +42,7 @@ export default class extends React.Component<IProps,IState>{
   public render(){
     const {id,editingId,description,completed} = this.props
     return(
-      <div className={classNames('todoItem',{edit:editingId===id,completed})} >
+      <div className={classNames('todo_item',{edit:editingId===id,completed})} >
         <Checkbox
           checked={completed}
           onChange={()=>this.props.completedTodo(id,{completed:!completed,completed_at: new Date()})}

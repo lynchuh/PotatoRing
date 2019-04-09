@@ -21,7 +21,7 @@
     .ant-collapse{
       .ant-collapse-content-box{
         padding: 0;
-        .todoItem{
+        .todo_item{
           &:last-child{
             border-bottom: none;
           }
@@ -32,7 +32,7 @@
       }
     }
 
-    .todoItem{
+    .todo_item{
       display: flex;
       align-items: center;
       padding: .3em .5em;

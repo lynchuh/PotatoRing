@@ -12,13 +12,13 @@ export const VerifyUser = ()=>async dispatch=>{
       type: constants.VERIFY_USER_SUCCESS,
       data: response.data
     })
-  }catch(e){
+  }catch(error){
     if(history.location.pathname === '/'){
       history.push('/login')
     }
     dispatch({
       type: constants.VERIFY_USER_FAILURE,
-      data:e
+      error
     })
   }
 }
@@ -32,10 +32,10 @@ export const Login = (params)=>async dispatch=>{
       data: response.data
     })
     history.push('/')
-  }catch(e){
+  }catch(error){
     dispatch({
       type: constants.VERIFY_USER_FAILURE,
-      data:e
+      error
     })
   }
 }
@@ -49,10 +49,10 @@ export const SignUp = (params)=>async dispatch=>{
       data: response.data
     })
     history.push('/')
-  }catch(e){
+  }catch(error){
     dispatch({
       type: constants.VERIFY_USER_FAILURE,
-      data:e
+      error
     })
   }
 }
@@ -69,7 +69,7 @@ export const InitData= ()=>async dispatch=>{
       data:todos.data.resources,
       type: constants.FETCH_TODOS_SUCCESS
     })
-  }catch(e){
-    console.log(e)
+  }catch(error){
+    console.log(error)
   }
 }

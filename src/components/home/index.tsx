@@ -85,12 +85,10 @@ export default class extends React.Component<any,any>{
             CompletedTodo= {this.props.CompletedTodo}
           />
         </main>
-        <main>
-          <Statistics
-            tomatoes={this.props.TomatoReducer.tomatoes}
-            todos= {this.props.TodoReducer.todos }
-          />
-        </main>
+        <Statistics
+          tomatoes={this.props.TomatoReducer.tomatoes}
+          todos= {this.props.TodoReducer.todos }
+        />
       </div>
     )
   }
