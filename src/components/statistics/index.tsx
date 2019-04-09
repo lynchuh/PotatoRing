@@ -12,6 +12,7 @@ interface IProps{
   todos: any[]
   UpdateTodo: (id,params)=>(dispatch)=>Promise<any>
   CompletedTodo: (id,params)=>(dispatch)=>Promise<any>
+  AbortTomatoes: (id,params)=>(dispatch)=>Promise<any>
 }
 
 
@@ -118,6 +119,7 @@ class Statistics extends React.Component<IProps,any>{
         <TomatoHistory
           dailyTomatoes = {this.dailyTomatoes}
           abortTomatoes={this.props.tomatoes.filter(tomato=>tomato.aborted && !tomato.description)}
+          AbortTomatoes = {this.props.AbortTomatoes}
         />
         {/* {this.state.activeId=== 0 ?
           <div>

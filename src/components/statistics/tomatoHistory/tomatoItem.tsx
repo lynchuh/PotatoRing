@@ -11,11 +11,11 @@ const TomatoItem =  (props)=>{
     }
   }
   const updateTomatoes = ()=>{
-    props.UpdateTomato(props.id,{description})
+    props.AbortTomatoes(props.id,{description})
     toggleEdit(false)
   }
   const deleteTomatoes = ()=>{
-    props.UpdateTomato(props.id,{aborted:true,description:props.description||'aborted tomatoes'})
+    props.AbortTomatoes(props.id,{aborted:true,description:props.description||'aborted tomatoes'})
     toggleEdit(false)
   }
   const cancleUpdate = ()=>{
@@ -28,7 +28,7 @@ const TomatoItem =  (props)=>{
       <span className='date_time'>{dayJs(props.started_at).format('hh:mm')}-{dayJs(props.ended_at).format('hh:mm')}</span>
       {
         isEdit ?
-        <Input value={description} onChange={handleChange} onPressEnter={()=>updateTomatoes}/>:
+        <Input value={description} onChange={handleChange} onPressEnter={updateTomatoes}/>:
         <span>{description}</span>}
       {
         !isEdit ? (

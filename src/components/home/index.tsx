@@ -90,6 +90,7 @@ export default class extends React.Component<any,any>{
           todos= {this.props.TodoReducer.todos }
           UpdateTodo = {this.props.UpdateTodo}
           CompletedTodo = {this.props.CompletedTodo}
+          AbortTomatoes = {this.props.AbortTomatoes}
         />
       </div>
     )

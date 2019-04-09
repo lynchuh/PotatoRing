@@ -7,6 +7,7 @@ import TomatoItem from './tomatoItem'
 interface IProps {
   abortTomatoes:any[]
   dailyTomatoes:any
+  AbortTomatoes: (id,params)=>(dispatch)=>Promise<any>
 }
 const TabPane = Tabs.TabPane;
 
@@ -48,7 +49,7 @@ export default class extends React.PureComponent<IProps,any>{
         </div>
         <ul className="itemlist">
           {
-            dailyTomatoes[date].map(tomato=><TomatoItem key={tomato.id} {...tomato} />)
+            dailyTomatoes[date].map(tomato=><TomatoItem key={tomato.id} {...tomato} AbortTomatoes={this.props.AbortTomatoes} />)
           }
         </ul>
       </div>
@@ -82,7 +83,7 @@ export default class extends React.PureComponent<IProps,any>{
           <TabPane tab="打断记录" key="2">
             <ul className='itemlist'>
               {
-                this.props.abortTomatoes.map(tomato=><TomatoItem key={tomato.id} {...tomato}/>)
+                this.props.abortTomatoes.map(tomato=><TomatoItem key={tomato.id} {...tomato} AbortTomatoes={this.props.AbortTomatoes}/>)
               }
             </ul>
             {/* <DeletedTodos todos={this.props.deletedTodos} turnToUndeleted={this.turnToUndeleted}/> */}
