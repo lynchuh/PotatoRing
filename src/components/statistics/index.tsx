@@ -97,7 +97,6 @@ class Statistics extends React.Component<IProps,any>{
               <Polygon
                 dailyData={this.dailyTomatoes}
                 width={this.state.width}
-                YRange ={this.completedTomatoes.length}
               />
               : null}
           </li>
@@ -111,7 +110,6 @@ class Statistics extends React.Component<IProps,any>{
               <Polygon
                 dailyData={this.dailyTodos}
                 width={this.state.width}
-                YRange ={this.completedTodos.length}
                 />
               : null}
           </li>

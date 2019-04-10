@@ -3,14 +3,13 @@ import React from 'react'
 interface IProps{
   dailyData: any
   width: number,
-  YRange: number
 }
 
 const Polygon = (props:IProps)=>{
   return (
     <div className="polygon" >
       <svg
-        className="peity"
+        className="graph"
         width="100%"
         height="60"
         preserveAspectRatio="none"
@@ -27,7 +26,8 @@ const Polygon = (props:IProps)=>{
 }
 Polygon.getPoint = (props:IProps)=>{
   const dates = Object.keys(props.dailyData)
-  const {YRange,width} = props
+  const YRange = dates.reduce((a,b)=>props.dailyData[b].length> a ? props.dailyData[b].length : a ,0)
+  const {width} = props
   const XRange = new Date().getTime() - Date.parse(dates[dates.length-1])
   let lastXPoint = 0
   const points = dates.reduce((a,date)=>{
