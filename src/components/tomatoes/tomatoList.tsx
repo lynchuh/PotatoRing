@@ -40,12 +40,12 @@ export default class extends React.Component<IProps>{
       )
       html.push(tomatoHtml)
     }
-    return html
+    return html.slice(0,3)
   }
   public render(){
     return (
       <div className='tomato_list'>
-        {this.props.finishedTomato.length !==0 ?this.tomatoListHtml:<Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> }
+        {this.props.finishedTomato.length !==0 ?this.tomatoListHtml:<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }
       </div>
     )
   }
