@@ -10,7 +10,7 @@ import logo from 'src/static/logo.png'
 
 import { VerifyUser,InitData} from 'src/store/user/action'
 import {AddTodo, ChangeNewTodoDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/actions'
-import { AbortTomatoes, AddTomatoes,ChangeTomaoDesc } from 'src/store/tomatoes/action'
+import { AbortTomatoes, AddTomatoes,ChangeTomatoDesc } from 'src/store/tomatoes/action'
 
 
 import './index.scss'
@@ -30,7 +30,7 @@ const mapDispatchToProps={
   CompletedTodo,
   AbortTomatoes,
   AddTomatoes,
-  ChangeTomaoDesc
+  ChangeTomatoDesc
 }
 
 @connect(mapStateToProps,mapDispatchToProps)
@@ -74,7 +74,7 @@ export default class extends React.Component<any,any>{
             {...this.props.TomatoReducer}
             AbortTomatoes = {this.props.AbortTomatoes}
             AddTomatoes ={this.props.AddTomatoes}
-            ChangeTomaoDesc ={this.props.ChangeTomaoDesc}
+            ChangeTomatoDesc ={this.props.ChangeTomatoDesc}
           />
           <Todo
             {...this.props.TodoReducer}
@@ -91,6 +91,7 @@ export default class extends React.Component<any,any>{
           UpdateTodo = {this.props.UpdateTodo}
           CompletedTodo = {this.props.CompletedTodo}
           AbortTomatoes = {this.props.AbortTomatoes}
+          AddTomatoes = {this.props.AddTomatoes}
         />
       </div>
     )

@@ -4,13 +4,20 @@ import * as constants from '../constants'
 interface IAdd {
   duration: number
 }
+interface IReplenish {
+  started_at: any
+  ended_at: any
+  description: string,
+  manually_created: true
+}
+
 interface IAbort{
   aborted?: boolean,
   ended_at?: string,
   description?: string
 }
 
-export const AddTomatoes = (params:IAdd)=>async dispatch=>{
+export const AddTomatoes = (params:IAdd|IReplenish)=>async dispatch=>{
   try{
     const response = await axios.post('/tomatoes',params)
     dispatch({
@@ -21,21 +28,6 @@ export const AddTomatoes = (params:IAdd)=>async dispatch=>{
     dispatch({
       error,
       type: constants.ADD_TOMATO_FAILURE,
-    })
-  }
-}
-
-export const FetchTomatoes =()=> async dispatch=>{
-  try{
-    const response = await axios.get('/tomatoes')
-    dispatch({
-      data: response.data.resources,
-      type: constants.FETCH_TOMATOES_SUCCESS
-    })
-  }catch(error){
-    dispatch({
-      error,
-      type: constants.FETCH_TOMATOES_FAILURE
     })
   }
 }
@@ -55,7 +47,7 @@ export const AbortTomatoes = (id:number,params:IAbort)=> async dispatch=>{
   }
 }
 
-export const ChangeTomaoDesc = (data)=>({
+export const ChangeTomatoDesc = (data)=>({
   type: constants.CHANGE_NEW_TOMATO_DESCRIPTION,
   data
 })

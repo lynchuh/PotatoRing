@@ -15,7 +15,7 @@ export default (props)=>{
       <TomatoAction
         abortTomato={props.AbortTomatoes}
         addTomato = {props.AddTomatoes}
-        changeTomaoDesc = {props.ChangeTomaoDesc}
+        ChangeTomatoDesc = {props.ChangeTomatoDesc}
         unfinishedTomato = {unfinishedTomato}
         description = {props.description}
       />

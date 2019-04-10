@@ -18,7 +18,7 @@ const TomatoItem =  (props)=>{
     props.AbortTomatoes(props.id,{aborted:true,description:props.description||'aborted tomatoes'})
     toggleEdit(false)
   }
-  const cancleUpdate = ()=>{
+  const cancelUpdate = ()=>{
     changeDesc(props.description||'番茄描述为空')
     toggleEdit(false)
   }
@@ -29,7 +29,8 @@ const TomatoItem =  (props)=>{
       {
         isEdit ?
         <Input value={description} onChange={handleChange} onPressEnter={updateTomatoes}/>:
-        <span>{description}</span>}
+          <span className='description'>{description} <p className={props.manually_created ? 'active':''}>（补）</p>  </span>
+      }
       {
         !isEdit ? (
           <div className='action_wrapper'>
@@ -39,7 +40,7 @@ const TomatoItem =  (props)=>{
         ):(
           <div className='action_wrapper'>
             <span onClick={updateTomatoes}>提交</span>
-            <span onClick={cancleUpdate}>取消</span>
+            <span onClick={cancelUpdate}>取消</span>
           </div>
         )
       }

@@ -1,22 +1,30 @@
 import React from 'react'
-import { Tabs,Pagination } from 'antd'
+import {Tabs, Pagination, Button, Tooltip} from 'antd'
 import dayJs from 'dayjs'
 
 import TomatoItem from './tomatoItem'
+import AddNewTomato from './newTomato'
 
 interface IProps {
   abortTomatoes:any[]
   dailyTomatoes:any
   AbortTomatoes: (id,params)=>(dispatch)=>Promise<any>
+  AddTomatoes: (params)=>(dispatch)=>Promise<any>
 }
-const TabPane = Tabs.TabPane;
+interface IState {
+  tabKey: string,
+  currentPage: number,
+  isShowAddPane: boolean
+}
+const TabPane = Tabs.TabPane
 
-export default class extends React.PureComponent<IProps,any>{
+export default class extends React.PureComponent<IProps,IState>{
   constructor(props){
     super(props)
     this.state = {
-      tabKey: "1",
-      currentPage: 1
+      tabKey: '1',
+      currentPage: 1,
+      isShowAddPane: false
     }
   }
   changeTab=(tabKey)=>{
@@ -56,12 +64,28 @@ export default class extends React.PureComponent<IProps,any>{
     )
     })
   }
-
+  cancelAddPane=()=>{
+    this.setState({
+      isShowAddPane: false
+    })
+  }
+  addNewTomato=(params)=>{
+    this.setState({
+      isShowAddPane: false
+    })
+    this.props.AddTomatoes(params)
+  }
   public render(){
+    const operations = this.state.tabKey==='1'?
+        (<Tooltip title="补记番茄">
+            <Button className='add_tomato' icon='plus' onClick={()=>this.setState({isShowAddPane:true})}/>
+        </Tooltip>):
+        null
     return (
       <div className='tomato_history'>
-        <Tabs onChange={this.changeTab} type="card">
+        <Tabs onChange={this.changeTab} type="card" tabBarExtraContent={operations}>
           <TabPane tab="完成的番茄" key="1">
+            { this.state.isShowAddPane? <AddNewTomato cancelAddPane={this.cancelAddPane} addNewTomato={this.addNewTomato}/> :null}
             {this.dailyHtml}
             <div className='Pagination_wrapper'>
               <Pagination
@@ -73,8 +97,7 @@ export default class extends React.PureComponent<IProps,any>{
                 current={this.state.currentPage}
                 onChange={this.togglePage}/>
               <span className='tips'>
-                总计{
-                  Object.keys(this.props.dailyTomatoes)
+                总计{Object.keys(this.props.dailyTomatoes)
                     .reduce((a,b)=>a+this.props.dailyTomatoes[b].length,0)
                 }个任务
               </span>
@@ -86,7 +109,6 @@ export default class extends React.PureComponent<IProps,any>{
                 this.props.abortTomatoes.map(tomato=><TomatoItem key={tomato.id} {...tomato} AbortTomatoes={this.props.AbortTomatoes}/>)
               }
             </ul>
-            {/* <DeletedTodos todos={this.props.deletedTodos} turnToUndeleted={this.turnToUndeleted}/> */}
           </TabPane>
         </Tabs>
       </div>

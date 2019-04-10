@@ -13,6 +13,7 @@ interface IProps{
   UpdateTodo: (id,params)=>(dispatch)=>Promise<any>
   CompletedTodo: (id,params)=>(dispatch)=>Promise<any>
   AbortTomatoes: (id,params)=>(dispatch)=>Promise<any>
+  AddTomatoes: (params)=>(dispatch)=>Promise<any>
 }
 
 
@@ -120,6 +121,7 @@ class Statistics extends React.Component<IProps,any>{
             dailyTomatoes = {this.dailyTomatoes}
             abortTomatoes={this.props.tomatoes.filter(tomato=>tomato.aborted && !tomato.description)}
             AbortTomatoes = {this.props.AbortTomatoes}
+            AddTomatoes = {this.props.AddTomatoes}
           />
           : null
         }

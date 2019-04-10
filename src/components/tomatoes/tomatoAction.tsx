@@ -11,7 +11,7 @@ interface IState{
 interface IProps{
   abortTomato:(id:number,params:any)=>void,
   addTomato:(params)=>void
-  changeTomaoDesc:(desc)=>any
+  ChangeTomatoDesc:(desc)=>any
   description: string,
   unfinishedTomato: any,
 }
@@ -42,7 +42,7 @@ export default class extends React.Component<IProps,IState>{
             placeholder='刚刚完成了什么工作呢？'
             suffix={suffix}
             value={this.props.description}
-            onChange={(e)=>this.props.changeTomaoDesc(e.target.value)}
+            onChange={(e)=>this.props.ChangeTomatoDesc(e.target.value)}
             onPressEnter={()=>this.props.abortTomato(id,{description:this.props.description,ended_at: new Date()})}
             />
           <Icon type="close-circle" onClick={()=>this.showConfirm(id)}/>
