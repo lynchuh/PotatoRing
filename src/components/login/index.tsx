@@ -36,9 +36,6 @@ export default class extends React.Component<ISignInProps,ISignInState>{
       password: '',
     }
   }
-  componentDidMount(){
-    this.props.VerifyUser()
-  }
   submit= (e:React.FormEvent<EventTarget>)=>{
     e.preventDefault()
     const {account,password} = this.state
@@ -48,6 +45,9 @@ export default class extends React.Component<ISignInProps,ISignInState>{
     const newVal = {}
     newVal[target] = event.target.value
     this.setState(newVal)
+  }
+  componentDidMount(){
+    this.props.VerifyUser()
   }
   public render(){
     const { account,password } = this.state

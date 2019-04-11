@@ -52,7 +52,7 @@ export default class extends React.PureComponent<IProps,any>{
   turnToUncompleted=(item)=>{
     this.props.CompletedTodo(item.id,{completed:false})
   }
-  turnToUndeleted=(item)=>{
+  turnToUnDeleted=(item)=>{
     this.props.UpdateTodo(item.id,{deleted:false})
   }
   public render(){
@@ -79,7 +79,7 @@ export default class extends React.PureComponent<IProps,any>{
             </div>
           </TabPane>
           <TabPane tab="已删除的任务" key="2">
-            <DeletedTodos todos={this.props.deletedTodos} turnToUndeleted={this.turnToUndeleted}/>
+            <DeletedTodos todos={this.props.deletedTodos} turnToUndeleted={this.turnToUnDeleted}/>
           </TabPane>
         </Tabs>
       </div>

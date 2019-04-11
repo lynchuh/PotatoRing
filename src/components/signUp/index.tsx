@@ -33,9 +33,6 @@ export default class extends React.Component<ISignUpProps,ISignUpState>{
       passwordConfirm:''
     }
   }
-  componentDidMount(){
-    this.props.VerifyUser()
-  }
   submit= async (e)=>{
     e.preventDefault()
     const {account,password,passwordConfirm} = this.state
@@ -49,6 +46,9 @@ export default class extends React.Component<ISignUpProps,ISignUpState>{
     const newVal = {}
     newVal[target] = event.target.value
     this.setState(newVal)
+  }
+  componentDidMount(){
+    this.props.VerifyUser()
   }
   public render(){
     const { account,password,passwordConfirm } = this.state

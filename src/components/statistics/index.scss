@@ -234,7 +234,86 @@
         margin-left: auto;
       }
     }
-  }{}
+  }
+  .monthly_history{
+    text-align: left;
+    border-radius: 4px;
+    border: 1px solid #DDD;
+    box-shadow: 0 2px 0 rgba(225,225,225,.2);
+    padding: 16px;
+    .monthly_tomato{
+      .month_action{
+        margin: 16px 4px;
+        span{
+          margin: 4px;
+        }
+      }
+      .key_metrics{
+        display: flex;
+        border: 1px solid #DDD;
+        border-radius: 3px;
+        border-bottom: none;
+        .metrics_item{
+          flex:1;
+          padding: .7em 0;
+          text-align: center;
+
+          font-size: 16px;
+          vertical-align: middle;
+            &:not(:last-child){
+              border-right: 1px solid #DDD;
+            }
+          strong{
+            font-size: 26px;
+            margin-right: .5em;
+          }
+          .rise{
+            color: #3D9400;
+          }
+          .reduce{
+            color: red;
+          }
+        }
+      }
+      .month_chart{
+        border:  1px solid #DDD;
+        text-align: center;
+        padding: 16px;
+        circle{
+          stroke: rgba(200,40,41,.8);
+          fill: #fff;
+          stroke-width: 2px;
+          &:hover{
+            cursor: pointer;
+            stroke: rgba(200,40,41,.8);
+            stroke-width: 3px;
+          }
+        }
+        text{
+          fill: rgba(200,40,41,.6);
+        }
+        path{
+          stroke: rgba(200,40,41,.6);
+          stroke-width: 2.5px;
+          fill: none;
+        }
+        rect{
+          fill: #F4F4F4;
+          stroke: #DDD;
+          stroke-width: .5;
+        }
+      }
+    }
+  }
+}
+.daily_tips{
+  .ant-tooltip-arrow{
+    border-top-color: rgba(200,40,41,.8);
+
+  }
+  .ant-tooltip-inner{
+    background-color:rgba(200,40,41,.8);
+  }
 }
 @media (max-width: 760px) {
   #statistics {
@@ -310,6 +389,16 @@
           width: 100%;
           .item{
           width: 100%;
+          }
+        }
+      }
+    }
+    .monthly_history{
+      .monthly_tomato{
+        .key_metrics{
+          flex-direction: column;
+          .metrics_item{
+            border-right: none!important;
           }
         }
       }

@@ -4,6 +4,7 @@ import dayJs from 'dayjs'
 import Polygon from './polygon'
 import TodoHistory from './todoHistory'
 import TomatoHistory from './tomatoHistory'
+import MonthlyHistory from './monthlyHistory'
 
 import './index.scss'
 
@@ -19,11 +20,21 @@ interface IProps{
 
 class Statistics extends React.Component<IProps,any>{
   liNode: HTMLLIElement | null;
+  ulNode: HTMLUListElement | null;
+  constructor(props){
+    super(props)
+    this.state = {
+      activeId: -1,
+      liWidth: this.liNode?this.liNode.offsetWidth-2 : 0,
+      ulWidth: this.ulNode?this.ulNode.offsetWidth-2 :0
+    }
+    this.updateSize = this.updateSize.bind(this)
+  }
   get completedTodos(){
     return this.props.todos.filter(todo=>todo.completed && !todo.deleted)
   }
   get completedTomatoes(){
-    return this.props.tomatoes.filter(tomato=>!tomato.aborted).filter(tomato=> tomato.description && tomato.ended_at)
+    return this.props.tomatoes.filter(tomato=>!tomato.aborted).filter(tomato=> tomato.description && tomato.ended_at).sort((a,b)=>Date.parse(a.started_at)-Date.parse(b.started_at))
   }
   get dailyTomatoes(){
     const newList = new Map()
@@ -57,14 +68,6 @@ class Statistics extends React.Component<IProps,any>{
     }
     return dailyTodos
   }
-  constructor(props){
-    super(props)
-    this.state = {
-      activeId: -1,
-      width: this.liNode?this.liNode.offsetWidth-2 : 0
-    }
-    this.updateSize = this.updateSize.bind(this)
-  }
   toggleActivePane(index){
     if(this.state.activeId!==index){
       this.setState({
@@ -73,8 +76,10 @@ class Statistics extends React.Component<IProps,any>{
     }
   }
   updateSize(){
-    const width = this.liNode? this.liNode.offsetWidth-2: 0
-    if(this.state.width !==width){this.setState({ width })}
+    const liWidth = this.liNode? this.liNode.offsetWidth-2: 0
+    const ulWidth = this.ulNode? this.ulNode.offsetWidth-2: 0
+    if(this.state.liWidth !==liWidth){this.setState({ liWidth })}
+    if(this.state.ulWidth !==ulWidth){this.setState({ ulWidth })}
   }
   componentDidMount(){
     this.updateSize()
@@ -83,12 +88,24 @@ class Statistics extends React.Component<IProps,any>{
   componentWillUnmount(){
     window.removeEventListener('resize', this.updateSize);
   }
-
   public render(){
     return (
       <main id='statistics'>
-        <ul className='graph'>
-          <li ref={li=>this.liNode=li} className={this.state.activeId === 0 ? 'active': '' } onClick={this.toggleActivePane.bind(this,0)}>
+        <ul className='graph' ref={ulNode=>this.ulNode = ulNode}>
+          <li className={this.state.activeId === 0 ? 'active': '' } onClick={this.toggleActivePane.bind(this,0)}>
+            <div className='desc'>
+              <span className="title">统计</span>
+              <span className='subtitle'>{new Date().getMonth()+1}月累积</span>
+              <span className='quantity'>{this.completedTomatoes.filter(t=>new Date(t.started_at).getMonth()===new Date().getMonth()).length}</span>
+            </div>
+            {this.completedTomatoes.length !==0 ?
+              <Polygon
+                dailyData={this.dailyTomatoes}
+                width={this.state.liWidth}
+              />
+              : null}
+          </li>
+          <li ref={li=>this.liNode=li} className={this.state.activeId === 1 ? 'active': '' } onClick={this.toggleActivePane.bind(this,1)}>
             <div className='desc'>
               <span className="title">番茄历史</span>
               <span className='subtitle'>累计完成番茄</span>
@@ -97,11 +114,11 @@ class Statistics extends React.Component<IProps,any>{
             {this.completedTomatoes.length !==0 ?
               <Polygon
                 dailyData={this.dailyTomatoes}
-                width={this.state.width}
+                width={this.state.liWidth}
               />
               : null}
           </li>
-          <li className={this.state.activeId === 1 ? 'active': '' } onClick={this.toggleActivePane.bind(this,1)}>
+          <li className={this.state.activeId === 2 ? 'active': '' } onClick={this.toggleActivePane.bind(this,2)}>
             <div className='desc'>
               <span className="title">任务历史</span>
               <span className='subtitle'>累计完成任务</span>
@@ -110,13 +127,20 @@ class Statistics extends React.Component<IProps,any>{
             {this.completedTodos.length !==0 ?
               <Polygon
                 dailyData={this.dailyTodos}
-                width={this.state.width}
+                width={this.state.liWidth}
                 />
               : null}
           </li>
         </ul>
-
-        {this.state.activeId=== 0 ?
+        {/*{this.state.activeId=== 0 ?*/}
+          < MonthlyHistory
+             completedTodos = {this.completedTodos}
+             completedTomatoes = {this.completedTomatoes}
+             width ={this.state.ulWidth - 64 }
+          />
+          {/*: null*/}
+        {/*}*/}
+        {this.state.activeId=== 1 ?
           <TomatoHistory
             dailyTomatoes = {this.dailyTomatoes}
             abortTomatoes={this.props.tomatoes.filter(tomato=>tomato.aborted && !tomato.description)}
@@ -125,7 +149,7 @@ class Statistics extends React.Component<IProps,any>{
           />
           : null
         }
-        {this.state.activeId=== 1 ?
+        {this.state.activeId=== 2 ?
           <TodoHistory
             deletedTodos={this.props.todos.filter(todo=>todo.deleted)}
             dailyTodos = {this.dailyTodos}
