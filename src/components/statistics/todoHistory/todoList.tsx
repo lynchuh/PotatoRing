@@ -7,7 +7,7 @@ export default (props)=>{
     {
       props.list.map(item=>(
         <li className='item' key={item.id}>
-          <span className='date_time'>{item.deleted?dayJs(item.completed_at).format('YYYY年MM月DD日 hh:mm'):dayJs(item.completed_at).format('hh:mm')}</span>
+          <span className='date_time'>{item.deleted?dayJs(item.completed_at).format('YYYY年MM月DD日 HH:mm'):dayJs(item.completed_at).format('HH:mm')}</span>
           <span className='desc'>{item.description}</span>
           <div className='action_wrapper'>
             <span onClick={()=>props.recoverAction(item)}>恢复</span>

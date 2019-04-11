@@ -5,6 +5,8 @@ import dayJs from 'dayjs'
 import TomatoItem from './tomatoItem'
 import AddNewTomato from './newTomato'
 
+const TabPane = Tabs.TabPane
+
 interface IProps {
   abortTomatoes:any[]
   dailyTomatoes:any
@@ -16,7 +18,6 @@ interface IState {
   currentPage: number,
   isShowAddPane: boolean
 }
-const TabPane = Tabs.TabPane
 
 export default class extends React.PureComponent<IProps,IState>{
   constructor(props){
@@ -34,6 +35,17 @@ export default class extends React.PureComponent<IProps,IState>{
   }
   togglePage=(currentPage:number)=>{
     this.setState({currentPage})
+  }
+  cancelAddPane=()=>{
+    this.setState({
+      isShowAddPane: false
+    })
+  }
+  addNewTomato=(params)=>{
+    this.setState({
+      isShowAddPane: false
+    })
+    this.props.AddTomatoes(params)
   }
   get dailyHtml(){
     const week = ['周日','周一','周二','周三','周四','周五','周六']
@@ -63,17 +75,6 @@ export default class extends React.PureComponent<IProps,IState>{
       </div>
     )
     })
-  }
-  cancelAddPane=()=>{
-    this.setState({
-      isShowAddPane: false
-    })
-  }
-  addNewTomato=(params)=>{
-    this.setState({
-      isShowAddPane: false
-    })
-    this.props.AddTomatoes(params)
   }
   public render(){
     const operations = this.state.tabKey==='1'?

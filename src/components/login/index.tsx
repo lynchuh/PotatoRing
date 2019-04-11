@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Input, Button, Form } from 'antd'
+import { Input, Button, Form,Alert } from 'antd'
 
 import { connect } from 'react-redux'
-import { VerifyUser,Login } from 'src/store/user/action'
+import { VerifyUser,Login,HasReadErrorInfo } from 'src/store/user/action'
 
 import './index.scss'
 
@@ -14,13 +14,16 @@ interface ISignInState {
 interface ISignInProps{
   VerifyUser:()=>(dispatch)=>Promise<any>
   Login:(params)=>(dispatch)=>Promise<any>
+  HasReadErrorInfo:()=>any
+  errorInfo: any
   history:any
 }
-const mapStateToProps= ()=>({})
+const mapStateToProps= ({UserReducer})=>({errorInfo: UserReducer.error})
 
 const mapDispatchToProps = {
   VerifyUser,
-  Login
+  Login,
+  HasReadErrorInfo
 }
 
 @connect(mapStateToProps,mapDispatchToProps)
@@ -48,9 +51,21 @@ export default class extends React.Component<ISignInProps,ISignInState>{
   }
   public render(){
     const { account,password } = this.state
+    const {errorInfo}= this.props
     return (
       <div className= 'container login' >
         <h1>登陆</h1>
+        {
+          errorInfo ? (
+            <Alert
+              message={typeof errorInfo === 'string'? errorInfo: errorInfo.reduce((a,b)=>a.concat(`+ ${b}`),'')}
+              type="error"
+              showIcon={true}
+              closable={true}
+              onClose={()=>this.props.HasReadErrorInfo()}
+            />
+          ) : null
+        }
         <Form onSubmit={this.submit}>
           <Input placeholder='请输入用户名' value={account} onChange={this.changeFormData.bind(this,'account')}/>
           <Input.Password placeholder='请输入密码' value={password} onChange={this.changeFormData.bind(this,'password')}/>

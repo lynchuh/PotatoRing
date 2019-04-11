@@ -9,7 +9,7 @@ import Statistics from '../statistics'
 import logo from 'src/static/logo.png'
 
 import { VerifyUser,InitData} from 'src/store/user/action'
-import {AddTodo, ChangeNewTodoDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/actions'
+import {AddTodo, ChangeNewTodoDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/action'
 import { AbortTomatoes, AddTomatoes,ChangeTomatoDesc } from 'src/store/tomatoes/action'
 
 

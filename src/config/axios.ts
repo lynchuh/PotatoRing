@@ -30,7 +30,7 @@ instance.interceptors.response.use(response=>{
   return response
 },error=>{
   if(error.response && error.response.status === 401){ // 与后端协议凡是没有登陆，返回401
-    if(window.location.pathname === '/'){
+    if(history.location.pathname === '/'){
       history.push('/login')
     }
   }

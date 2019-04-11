@@ -25,7 +25,7 @@ const TomatoItem =  (props)=>{
   return  (
     <li className='item' key={props.id}>
       {props.aborted ? <span>{dayJs(props.started_at).format('YYYY年MM月DD日')}</span>:null}
-      <span className='date_time'>{dayJs(props.started_at).format('hh:mm')}-{dayJs(props.ended_at).format('hh:mm')}</span>
+      <span className='date_time'>{dayJs(props.started_at).format('HH:mm')}-{dayJs(props.ended_at).format('HH:mm')}</span>
       {
         isEdit ?
         <Input value={description} onChange={handleChange} onPressEnter={updateTomatoes}/>:

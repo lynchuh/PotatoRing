@@ -104,12 +104,12 @@ export default class extends React.Component<IProps,IState>{
       <Form layout="inline" onSubmit={this.submitNewTomato}>
         <div>
           <FormItem label="番茄日期">
-            <DatePicker showTime={true} locale={locale} onChange={this.saveStartTime} disabledDate={this.disabledDate} format='YYYY-MM-DD hh:mm'/>
+            <DatePicker showTime={true} locale={locale} onChange={this.saveStartTime} disabledDate={this.disabledDate} format='YYYY-MM-DD HH:mm'/>
           </FormItem>
         </div>
         <div>
           <FormItem label="结束时间">
-            <DatePicker showTime={true} locale={locale} onChange={this.saveEndTime} disabledDate={this.disabledDate}  format='YYYY-MM-DD hh:mm'/>
+            <DatePicker showTime={true} locale={locale} onChange={this.saveEndTime} disabledDate={this.disabledDate}  format='YYYY-MM-DD HH:mm'/>
           </FormItem>
         </div>
         <div>

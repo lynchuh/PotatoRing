@@ -16,10 +16,6 @@ export const VerifyUser = ()=>async dispatch=>{
     if(history.location.pathname === '/'){
       history.push('/login')
     }
-    dispatch({
-      type: constants.VERIFY_USER_FAILURE,
-      error
-    })
   }
 }
 
@@ -33,12 +29,22 @@ export const Login = (params)=>async dispatch=>{
     })
     history.push('/')
   }catch(error){
+    let errorInfo
+    if(!error.response){
+      errorInfo = '请检查网络是否正常'
+    }else{
+      const {errors} = error.response.data
+      if(errors instanceof Array) {
+        errorInfo = errors
+      }
+    }
     dispatch({
       type: constants.VERIFY_USER_FAILURE,
-      error
+      error:errorInfo
     })
   }
 }
+
 
 export const SignUp = (params)=>async dispatch=>{
   try{
@@ -50,9 +56,18 @@ export const SignUp = (params)=>async dispatch=>{
     })
     history.push('/')
   }catch(error){
+    let errorInfo
+    if(!error.response){
+      errorInfo = '请检查网络是否正常'
+    }else{
+      const {errors} = error.response.data
+      if(errors instanceof Array) {
+        errorInfo = errors
+      }
+    }
     dispatch({
       type: constants.VERIFY_USER_FAILURE,
-      error
+      error:errorInfo
     })
   }
 }
@@ -73,3 +88,7 @@ export const InitData= ()=>async dispatch=>{
     console.log(error)
   }
 }
+
+export const HasReadErrorInfo =()=>({
+  type: constants.HAS_READ_USER_ERROR
+})

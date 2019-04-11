@@ -1,11 +1,13 @@
 import * as constants from '../constants'
 
 interface IState {
-  userInfo: any
+  userInfo: any,
+  error: any
 }
 
 const initState:IState = {
   userInfo: null,
+  error: null
 }
 
 export default (state=initState,action)=>{
@@ -13,7 +15,9 @@ export default (state=initState,action)=>{
     case constants.VERIFY_USER_SUCCESS:
       return {userInfo: action.data}
     case constants.VERIFY_USER_FAILURE:
-      return {error:action.error,...state}
+      return {...state,error:action.error}
+    case constants.HAS_READ_USER_ERROR:
+      return {...state,error:null}
     default:
       return state
   }
