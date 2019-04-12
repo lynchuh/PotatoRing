@@ -2,6 +2,7 @@ import React from 'react'
 import dayJs from 'dayjs'
 
 import Polygon from './polygon'
+import BarChart from './barChart'
 import TodoHistory from './todoHistory'
 import TomatoHistory from './tomatoHistory'
 import MonthlyHistory from './monthlyHistory'
@@ -16,9 +17,13 @@ interface IProps{
   AbortTomatoes: (id,params)=>(dispatch)=>Promise<any>
   AddTomatoes: (params)=>(dispatch)=>Promise<any>
 }
+interface IState {
+	activeId: number
+	liWidth: number
+	ulWidth: number
+}
 
-
-class Statistics extends React.Component<IProps,any>{
+class Statistics extends React.Component<IProps,IState>{
   liNode: HTMLLIElement | null;
   ulNode: HTMLUListElement | null;
   constructor(props){
@@ -32,9 +37,13 @@ class Statistics extends React.Component<IProps,any>{
   }
   get completedTodos(){
     return this.props.todos.filter(todo=>todo.completed && !todo.deleted)
+	    .sort((a,b)=>Date.parse(a.completed_at)-Date.parse(b.completed_at))
   }
   get completedTomatoes(){
-    return this.props.tomatoes.filter(tomato=>!tomato.aborted).filter(tomato=> tomato.description && tomato.ended_at).sort((a,b)=>Date.parse(a.started_at)-Date.parse(b.started_at))
+    return this.props.tomatoes
+	    .filter(tomato=>!tomato.aborted)
+	    .filter(tomato=> tomato.description && tomato.ended_at)
+	    .sort((a,b)=>Date.parse(a.started_at)-Date.parse(b.started_at))
   }
   get dailyTomatoes(){
     const newList = new Map()
@@ -68,6 +77,14 @@ class Statistics extends React.Component<IProps,any>{
     }
     return dailyTodos
   }
+  get weeklyTomatoes(){
+    const weekData:any[] = [...Array(7)].map(()=>[])
+    this.completedTomatoes.forEach(tomato=>{
+      const day = new Date(tomato.created_at).getDay()
+      weekData[day].push(tomato)
+    })
+    return weekData
+  }
   toggleActivePane(index){
     if(this.state.activeId!==index){
       this.setState({
@@ -77,7 +94,10 @@ class Statistics extends React.Component<IProps,any>{
   }
   updateSize(){
     const liWidth = this.liNode? this.liNode.offsetWidth-2: 0
-    const ulWidth = this.ulNode? this.ulNode.offsetWidth-2: 0
+    let ulWidth = this.ulNode? this.ulNode.offsetWidth-66: 0
+	  if(ulWidth<0){
+	  	ulWidth = 0
+	  }
     if(this.state.liWidth !==liWidth){this.setState({ liWidth })}
     if(this.state.ulWidth !==ulWidth){this.setState({ ulWidth })}
   }
@@ -99,11 +119,9 @@ class Statistics extends React.Component<IProps,any>{
               <span className='quantity'>{this.completedTomatoes.filter(t=>new Date(t.started_at).getMonth()===new Date().getMonth()).length}</span>
             </div>
             {this.completedTomatoes.length !==0 ?
-              <Polygon
-                dailyData={this.dailyTomatoes}
-                width={this.state.liWidth}
-              />
-              : null}
+              <BarChart chartData={this.weeklyTomatoes} width={this.state.liWidth} />
+              : null
+            }
           </li>
           <li ref={li=>this.liNode=li} className={this.state.activeId === 1 ? 'active': '' } onClick={this.toggleActivePane.bind(this,1)}>
             <div className='desc'>
@@ -132,14 +150,15 @@ class Statistics extends React.Component<IProps,any>{
               : null}
           </li>
         </ul>
-        {/*{this.state.activeId=== 0 ?*/}
+        {this.state.activeId=== 0 ?
           < MonthlyHistory
              completedTodos = {this.completedTodos}
              completedTomatoes = {this.completedTomatoes}
-             width ={this.state.ulWidth - 64 }
+             ulWidth ={this.state.ulWidth}
+             liWidth={this.state.liWidth}
           />
-          {/*: null*/}
-        {/*}*/}
+          : null
+        }
         {this.state.activeId=== 1 ?
           <TomatoHistory
             dailyTomatoes = {this.dailyTomatoes}

@@ -9,7 +9,6 @@ const Polygon = (props:IProps)=>{
   return (
     <div className="polygon" >
       <svg
-        className="graph"
         width="100%"
         height="60"
         preserveAspectRatio="none"

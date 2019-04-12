@@ -2,8 +2,8 @@ import React from 'react'
 import { Menu,Dropdown,Icon } from 'antd'
 import {connect} from 'react-redux'
 
-// import Todo from 'src/components/todo'
-// import Tomatoes from 'src/components/tomatoes'
+import Todo from 'src/components/todo'
+import Tomatoes from 'src/components/tomatoes'
 
 import Statistics from '../statistics'
 import logo from 'src/static/logo.png'
@@ -69,22 +69,22 @@ export default class extends React.Component<any,any>{
             </span>
           </Dropdown>
         </header>
-        {/*<main>*/}
-          {/*<Tomatoes*/}
-            {/*{...this.props.TomatoReducer}*/}
-            {/*AbortTomatoes = {this.props.AbortTomatoes}*/}
-            {/*AddTomatoes ={this.props.AddTomatoes}*/}
-            {/*ChangeTomatoDesc ={this.props.ChangeTomatoDesc}*/}
-          {/*/>*/}
-          {/*<Todo*/}
-            {/*{...this.props.TodoReducer}*/}
-            {/*AddTodo={this.props.AddTodo}*/}
-            {/*ChangeNewTodoDesc={this.props.ChangeNewTodoDesc}*/}
-            {/*ToggleEditId ={this.props.ToggleEditId}*/}
-            {/*UpdateTodo = {this.props.UpdateTodo}*/}
-            {/*CompletedTodo= {this.props.CompletedTodo}*/}
-          {/*/>*/}
-        {/*</main>*/}
+        <main>
+          <Tomatoes
+            {...this.props.TomatoReducer}
+            AbortTomatoes = {this.props.AbortTomatoes}
+            AddTomatoes ={this.props.AddTomatoes}
+            ChangeTomatoDesc ={this.props.ChangeTomatoDesc}
+          />
+          <Todo
+            {...this.props.TodoReducer}
+            AddTodo={this.props.AddTodo}
+            ChangeNewTodoDesc={this.props.ChangeNewTodoDesc}
+            ToggleEditId ={this.props.ToggleEditId}
+            UpdateTodo = {this.props.UpdateTodo}
+            CompletedTodo= {this.props.CompletedTodo}
+          />
+        </main>
         <Statistics
           tomatoes={this.props.TomatoReducer.tomatoes}
           todos= {this.props.TodoReducer.todos }

@@ -14,12 +14,12 @@ export default  class extends React.Component<IProps,any> {
     if(YRange === 0){
       YRange = 5
     }
-    const points = Object.keys(monthData).map(date=>{
+	  return Object.keys(monthData).map(date=>{
       const x = (new Date(date).getDate()-0.5) / XRange *  this.props.width
       const y = (1-monthData[date].length/YRange) * 160 +10
       return [x,y,monthData[date].length]
     })
-    return points
+
   }
 
   public render(){

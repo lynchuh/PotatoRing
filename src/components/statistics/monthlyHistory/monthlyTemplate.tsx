@@ -5,7 +5,7 @@ import { InputNumber } from 'antd'
 import MonthChart from './monthChart'
 
 interface IProps{
-  completedTomatoes: any[]
+  caleData: any[]
   width: number
 }
 
@@ -23,22 +23,29 @@ export default class extends React.Component<IProps,IState>{
     }
   }
   get monthData(){
-    return this.props.completedTomatoes
-      .filter(t=>dayJs(t.started_at).format('MM')===this.state.currentMonth)
-      .filter(t=>dayJs(t.started_at).format('YYYY')===this.state.currentYear)
+    return this.props.caleData
+      .filter(t=>dayJs(t.calTime).format('MM')===this.state.currentMonth)
+      .filter(t=>dayJs(t.calTime).format('YYYY')===this.state.currentYear)
   }
-  get lastMonthData(){
-    const {currentMonth,currentYear} = this.state
-    let lastMonth = currentMonth === '01' ? '12': `${Number(currentMonth) -1}`
-    if(Number(lastMonth)<10){
-      lastMonth = `0${lastMonth}`
-    }
-    const lastYear = currentMonth === '01' ? `${Number(currentYear)-1}` : currentYear
-    return this.props.completedTomatoes
-      .filter(t=>dayJs(t.started_at).format('MM') === lastMonth)
-      .filter(t=>dayJs(t.started_at).format('YYYY') === lastYear)
+  get averages(){
+	  const currentMonthDays = dayJs(`${this.state.currentYear}-${this.state.currentMonth}-1`).daysInMonth()
+	  return (this.monthData.length/currentMonthDays).toFixed(2)
   }
-  get chartData(){
+	get rate(){
+		const {currentMonth,currentYear} = this.state
+		const lastYear = currentMonth === '01' ? `${Number(currentYear)-1}` : currentYear
+		let lastMonth = currentMonth === '01' ? '12': `${Number(currentMonth) -1}`
+		if(Number(lastMonth)<10){
+			lastMonth = `0${lastMonth}`
+		}
+		const lastNum = this.props.caleData
+			.filter(t=>dayJs(t.calTime).format('MM') === lastMonth)
+			.filter(t=>dayJs(t.calTime).format('YYYY') === lastYear)
+			.length
+		const r = ((this.monthData.length-lastNum)/lastNum).toFixed(1)
+		return Number(r) === Infinity ||!Number(r) ? '0' :r
+	}
+	get chartData(){
     const {currentYear,currentMonth} = this.state
     const newList = new Map();
     const obj ={}
@@ -48,7 +55,7 @@ export default class extends React.Component<IProps,IState>{
       newList.set(day,[])
     })
     this.monthData.forEach(tomato=>{
-      const day = dayJs(tomato.started_at).format('YYYY-MM-DD')
+      const day = dayJs(tomato.calTime).format('YYYY-MM-DD')
       const list = newList.get(day)
       list.push(tomato)
       newList.set(day,list)
@@ -58,14 +65,14 @@ export default class extends React.Component<IProps,IState>{
     }
     return {monthChart:obj,XRange:totalDay}
   }
-  onChangeYear = (value)=> {
+	onChangeYear = (value)=> {
     if(this.state.currentYear !== `${value}`){
       this.setState({
         currentYear: `${value}`
       })
     }
   }
-  onChangeMonth = (value)=>{
+	onChangeMonth = (value)=>{
     const month = value > 10 ? `${value}` : `0${value}`
     if(month !== this.state.currentMonth){
       this.setState({
@@ -74,19 +81,10 @@ export default class extends React.Component<IProps,IState>{
     }
   }
   public render(){
-    const {currentMonth,currentYear} = this.state
-    const {monthData:current,lastMonthData:last} = this
-    const currentMonthDays = dayJs(`${currentYear}-${currentMonth+1}-1`).daysInMonth()
-    const averages = (this.monthData.length/currentMonthDays).toFixed(2)
-    let rate = ((current.length-last.length)/last.length).toFixed(1)
-    if(Number(rate) === Infinity ||!Number(rate)){
-      rate = `0`
-    }
-    const firstYear = this.props.completedTomatoes[0]?this.props.completedTomatoes[0].started_at : new Date()
+    const firstYear = this.props.caleData[0]?this.props.caleData[0].calTime : new Date()
     const maxMonth = Number(this.state.currentYear) === new Date().getFullYear() ? new Date().getMonth() +1 : 12
-
-    return (
-      <div className="monthly_tomato">
+           return (
+      <div className="monthly_template">
         <div className='month_action'>
           <span>当前月份：</span>
           <InputNumber defaultValue={Number(this.state.currentYear)} onChange={this.onChangeYear} max={new Date().getFullYear()} min={new Date(firstYear).getFullYear()} />
@@ -100,11 +98,13 @@ export default class extends React.Component<IProps,IState>{
             <span>总数</span>
           </div>
           <div className='metrics_item'>
-            <strong>{averages}</strong>
+            <strong>{this.averages}</strong>
             <span>日平均数</span>
           </div>
           <div className='metrics_item'>
-            <strong className={Number(rate) >= 0 ? 'rise':'reduce'}>{ Number(rate) >= 0 ? `+${rate}`: rate}</strong>
+            <strong className={Number(this.rate) >= 0 ? 'rise':'reduce'}>
+              { Number(this.rate) >= 0 ? `+${this.rate}`: this.rate}
+            </strong>
             <span>月增长量</span>
           </div>
         </div>
