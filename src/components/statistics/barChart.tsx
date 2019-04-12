@@ -20,8 +20,6 @@ export default class extends React.Component<IProps,any>{
 
 	}
 	public render(){
-		console.log(this.props.chartData)
-		console.log(this.points)
 		return(
 			<div className='bar_chart'>
 				<svg width='100%' height={60}>

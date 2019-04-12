@@ -58,12 +58,12 @@ export const CompletedTodo =(id:number,data)=>(async dispatch=>{
 })
 
 export const ToggleEditId = (id:number)=>({
-  id,
+  data:id,
   type: constants.TOGGLE_EDIT_ID,
 })
 
 export const ChangeNewTodoDesc = (description:string)=>({
-  description,
+  data:description,
   type: constants.CHANGE_NEW_TODO_DESCRIPTION
 })
 

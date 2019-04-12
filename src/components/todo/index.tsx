@@ -10,11 +10,11 @@ interface IConnectProps {
   todos:any,
   newDescription: string,
   editingId: number,
-  AddTodo: (params)=>void,
-  ChangeNewTodoDesc: ()=>void,
-  ToggleEditId: ()=>void,
-  UpdateTodo: ()=>void,
-  CompletedTodo: ()=>void
+	ChangeNewTodoDesc: (des:string)=>any
+	ToggleEditId: (id:number)=>any
+	AddTodo: (params)=>(dispatch)=>Promise<any>
+	UpdateTodo: (id:number,params)=>(dispatch)=>Promise<any>
+	CompletedTodo: (id:number,params)=>(dispatch)=>Promise<any>
 }
 
 const {Panel} = Collapse

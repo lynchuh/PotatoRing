@@ -8,9 +8,9 @@ import AddNewTomato from './newTomato'
 const TabPane = Tabs.TabPane
 
 interface IProps {
-  abortTomatoes:any[]
+  updateTomatoes:any[]
   dailyTomatoes:any
-  AbortTomatoes: (id,params)=>(dispatch)=>Promise<any>
+  UpdateTomato: (id,params)=>(dispatch)=>Promise<any>
   AddTomatoes: (params)=>(dispatch)=>Promise<any>
 }
 interface IState {
@@ -69,7 +69,7 @@ export default class extends React.PureComponent<IProps,IState>{
         </div>
         <ul className="itemlist">
           {
-            dailyTomatoes[date].map(tomato=><TomatoItem key={tomato.id} {...tomato} AbortTomatoes={this.props.AbortTomatoes} />)
+            dailyTomatoes[date].map(tomato=><TomatoItem key={tomato.id} {...tomato} UpdateTomato={this.props.UpdateTomato} />)
           }
         </ul>
       </div>
@@ -107,7 +107,7 @@ export default class extends React.PureComponent<IProps,IState>{
           <TabPane tab="打断记录" key="2">
             <ul className='itemlist'>
               {
-                this.props.abortTomatoes.map(tomato=><TomatoItem key={tomato.id} {...tomato} AbortTomatoes={this.props.AbortTomatoes}/>)
+                this.props.updateTomatoes.map(tomato=><TomatoItem key={tomato.id} {...tomato} UpdateTomato={this.props.UpdateTomato}/>)
               }
             </ul>
           </TabPane>

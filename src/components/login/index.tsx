@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Input, Button, Form,Alert } from 'antd'
-
 import { connect } from 'react-redux'
+
 import { VerifyUser,Login,HasReadErrorInfo } from 'src/store/user/action'
 
 import './index.scss'

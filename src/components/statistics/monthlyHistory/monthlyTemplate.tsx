@@ -42,8 +42,13 @@ export default class extends React.Component<IProps,IState>{
 			.filter(t=>dayJs(t.calTime).format('MM') === lastMonth)
 			.filter(t=>dayJs(t.calTime).format('YYYY') === lastYear)
 			.length
-		const r = ((this.monthData.length-lastNum)/lastNum).toFixed(1)
-		return Number(r) === Infinity ||!Number(r) ? '0' :r
+		let r = ((this.monthData.length-lastNum)/lastNum).toFixed(1)
+        if(Number(r)===Infinity){
+          r = '1.0'
+        }else if(!Number(r)){
+          r = '0'
+        }
+		return r
 	}
 	get chartData(){
     const {currentYear,currentMonth} = this.state

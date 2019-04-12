@@ -2,17 +2,17 @@ import React from 'react'
 import classNames from 'classnames'
 import {Input,Icon} from 'antd'
 
-interface Istate{
+interface IState{
   showEnterIcon: boolean,
 }
 
 interface IProps {
-  AddTodo: (params)=>void,
-  ChangeNewTodoDesc: (desc:string)=>void,
+  AddTodo: (params)=>(dispatch)=>Promise<any>
+  ChangeNewTodoDesc: (desc:string)=>any,
   description: string
 }
 
-export default class extends React.Component<IProps,Istate>{
+export default class extends React.Component<IProps,IState>{
   constructor(props){
     super(props)
     this.state = {

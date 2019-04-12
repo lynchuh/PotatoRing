@@ -10,9 +10,7 @@ import logo from 'src/static/logo.png'
 
 import { VerifyUser,InitData} from 'src/store/user/action'
 import {AddTodo, ChangeNewTodoDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/action'
-import { AbortTomatoes, AddTomatoes,ChangeTomatoDesc } from 'src/store/tomatoes/action'
-
-
+import { UpdateTomato, AddTomatoes,ChangeTomatoDesc } from 'src/store/tomatoes/action'
 import './index.scss'
 
 const mapStateToProps=({UserReducer,TodoReducer,TomatoReducer})=>({
@@ -20,6 +18,7 @@ const mapStateToProps=({UserReducer,TodoReducer,TomatoReducer})=>({
   TomatoReducer,
   TodoReducer
 })
+
 const mapDispatchToProps={
   VerifyUser,
   InitData,
@@ -28,14 +27,31 @@ const mapDispatchToProps={
   ToggleEditId,
   UpdateTodo,
   CompletedTodo,
-  AbortTomatoes,
+  UpdateTomato,
   AddTomatoes,
   ChangeTomatoDesc
 }
 
+interface IProps {
+  VerifyUser: ()=>(dispatch)=>Promise<any>
+  InitData: ()=>(dispatch)=>Promise<any>
+	ChangeNewTodoDesc: (des:string)=>any
+	ToggleEditId: (id:number)=>any
+  AddTodo: (params)=>(dispatch)=>Promise<any>
+  UpdateTodo: (id:number,params)=>(dispatch)=>Promise<any>
+  CompletedTodo: (id:number,params)=>(dispatch)=>Promise<any>
+  AddTomatoes: (params)=>(dispatch)=>Promise<any>
+  UpdateTomato: (id,params)=>(dispatch)=>Promise<any>
+  ChangeTomatoDesc:(des:string)=>any
+  userInfo: any
+  TomatoReducer:any
+  TodoReducer: any
+  history: any
+}
+
 @connect(mapStateToProps,mapDispatchToProps)
 
-export default class extends React.Component<any,any>{
+export default class extends React.Component<IProps,never>{
   componentWillMount(){
     this.props.VerifyUser()
     this.props.InitData()
@@ -72,7 +88,7 @@ export default class extends React.Component<any,any>{
         <main>
           <Tomatoes
             {...this.props.TomatoReducer}
-            AbortTomatoes = {this.props.AbortTomatoes}
+            UpdateTomato = {this.props.UpdateTomato}
             AddTomatoes ={this.props.AddTomatoes}
             ChangeTomatoDesc ={this.props.ChangeTomatoDesc}
           />
@@ -90,7 +106,7 @@ export default class extends React.Component<any,any>{
           todos= {this.props.TodoReducer.todos }
           UpdateTodo = {this.props.UpdateTodo}
           CompletedTodo = {this.props.CompletedTodo}
-          AbortTomatoes = {this.props.AbortTomatoes}
+          UpdateTomato = {this.props.UpdateTomato}
           AddTomatoes = {this.props.AddTomatoes}
         />
       </div>

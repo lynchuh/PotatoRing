@@ -4,16 +4,24 @@ import TomatoList from './tomatoList'
 
 import './index.scss'
 
-export default (props)=>{
+interface IProps {
+  AddTomatoes: (params)=>(dispatch)=>Promise<any>
+  UpdateTomato: (id,params)=>(dispatch)=>Promise<any>
+  ChangeTomatoDesc:(des:string)=>any
+  tomatoes: any[]
+  description: string
+}
+
+export default (props:IProps)=>{
   const unfinishedTomato = props.tomatoes
     .filter(tomato=>!tomato.aborted && !tomato.description && !tomato.ended_at)[0]
   const finishedTomato = props.tomatoes
     .filter(tomato=> !tomato.aborted && tomato.description && tomato.ended_at)
     .slice(0,8)
   return (
-    <div className="content" id="tomatos">
+    <div className="content" id="tomatoes">
       <TomatoAction
-        abortTomato={props.AbortTomatoes}
+        updateTomato={props.UpdateTomato}
         addTomato = {props.AddTomatoes}
         ChangeTomatoDesc = {props.ChangeTomatoDesc}
         unfinishedTomato = {unfinishedTomato}

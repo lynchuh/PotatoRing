@@ -32,7 +32,7 @@ export const AddTomatoes = (params:IAdd|IReplenish)=>async dispatch=>{
   }
 }
 
-export const AbortTomatoes = (id:number,params:IAbort)=> async dispatch=>{
+export const UpdateTomato = (id:number,params:IAbort)=> async dispatch=>{
   try{
     const response = await axios.put(`/tomatoes/${id}`,params)
     dispatch({

@@ -4,13 +4,13 @@ import classNames from 'classnames'
 
 
 interface IProps{
-  description:string,
-  id: number,
-  completed: boolean,
-  editingId: number,
-  updateTodo:(id:number,params:any)=>any,
+  description:string
+  id: number
+  completed: boolean
+  editingId: number
+  updateTodo:(id:number,params)=>(dispatch)=>Promise<any>
   toggleEditId:(id:number)=>any
-  completedTodo:(id,params)=>any
+  completedTodo:(id:number,params)=>(dispatch)=>Promise<any>
 }
 
 interface IState{

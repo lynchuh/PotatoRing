@@ -11,11 +11,11 @@ const TomatoItem =  (props)=>{
     }
   }
   const updateTomatoes = ()=>{
-    props.AbortTomatoes(props.id,{description})
+    props.UpdateTomato(props.id,{description})
     toggleEdit(false)
   }
   const deleteTomatoes = ()=>{
-    props.AbortTomatoes(props.id,{aborted:true,description:props.description||'aborted tomatoes'})
+    props.UpdateTomato(props.id,{aborted:true,description:props.description||'aborted tomatoes'})
     toggleEdit(false)
   }
   const cancelUpdate = ()=>{
