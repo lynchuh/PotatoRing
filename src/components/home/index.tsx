@@ -11,6 +11,7 @@ import logo from 'src/static/logo.png'
 import { VerifyUser,InitData} from 'src/store/user/action'
 import {AddTodo, ChangeNewTodoDesc, ToggleEditId, UpdateTodo, CompletedTodo} from 'src/store/todos/action'
 import { UpdateTomato, AddTomatoes,ChangeTomatoDesc } from 'src/store/tomatoes/action'
+
 import './index.scss'
 
 const mapStateToProps=({UserReducer,TodoReducer,TomatoReducer})=>({
@@ -35,14 +36,14 @@ const mapDispatchToProps={
 interface IProps {
   VerifyUser: ()=>(dispatch)=>Promise<any>
   InitData: ()=>(dispatch)=>Promise<any>
-	ChangeNewTodoDesc: (des:string)=>any
-	ToggleEditId: (id:number)=>any
-  AddTodo: (params)=>(dispatch)=>Promise<any>
-  UpdateTodo: (id:number,params)=>(dispatch)=>Promise<any>
-  CompletedTodo: (id:number,params)=>(dispatch)=>Promise<any>
-  AddTomatoes: (params)=>(dispatch)=>Promise<any>
+  ChangeNewTodoDesc: (desc:string)=>any
+  ToggleEditId: ()=>any
+  AddTodo: ()=>(dispatch)=>Promise<any>
+  UpdateTodo: ()=>(dispatch)=>Promise<any>
+  CompletedTodo: ()=>(dispatch)=>Promise<any>
+  AddTomatoes: ()=>(dispatch)=>Promise<any>
   UpdateTomato: (id,params)=>(dispatch)=>Promise<any>
-  ChangeTomatoDesc:(des:string)=>any
+  ChangeTomatoDesc:()=>any
   userInfo: any
   TomatoReducer:any
   TodoReducer: any
@@ -63,10 +64,6 @@ export default class extends React.Component<IProps,never>{
   public render(){
     const menu = (
       <Menu>
-        <Menu.Item>
-          <Icon type="user" />
-          <span onClick={()=>console.log('click')}>个人设置</span>
-        </Menu.Item>
         <Menu.Item>
           <Icon type="poweroff" />
           <span onClick={this.logout}>登出</span>
