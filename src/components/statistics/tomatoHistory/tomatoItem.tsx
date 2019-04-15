@@ -24,7 +24,7 @@ const TomatoItem =  (props)=>{
   }
   return  (
     <li className='item' key={props.id}>
-      {props.aborted ? <span>{dayJs(props.started_at).format('YYYY年MM月DD日')}</span>:null}
+      {props.aborted ? <span className='day_time'>{dayJs(props.started_at).format('YYYY年MM月DD日')}</span>:null}
       <span className='date_time'>{dayJs(props.started_at).format('HH:mm')}-{dayJs(props.ended_at).format('HH:mm')}</span>
       {
         isEdit ?
@@ -35,7 +35,7 @@ const TomatoItem =  (props)=>{
         !isEdit ? (
           <div className='action_wrapper'>
             <span onClick={()=>toggleEdit(true)}>编辑</span>
-            <span onClick={deleteTomatoes}>删除</span>
+            {!props.aborted?<span onClick={deleteTomatoes}>删除</span>:null}
           </div>
         ):(
           <div className='action_wrapper'>
