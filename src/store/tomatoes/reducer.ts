@@ -15,7 +15,7 @@ export default (state=initState,action)=>{
   .filter(tomato=>!tomato.aborted)
   .filter(tomato=>!tomato.description && !tomato.ended_at)[0]
   switch(action.type){
-    case constants.FETCH_TODOS_SUCCESS: 
+    case constants.FETCH_TODOS_SUCCESS:
     let desc = ''
     if(unfinishedTomato){
       desc = action.data
@@ -42,7 +42,6 @@ export default (state=initState,action)=>{
       const newTomatoes = state.tomatoes.map(tomato=> tomato.id === action.data.id ? action.data : tomato)
       return {...state,tomatoes:newTomatoes,description:''}
     case constants.ADD_TOMATO_FAILURE:
-    case constants.FETCH_TOMATOES_FAILURE:
     case constants.UPDATE_TOMATO_FAILURE:
     default:
       return state

@@ -18,9 +18,9 @@ interface IProps{
   AddTomatoes: (params)=>(dispatch)=>Promise<any>
 }
 interface IState {
-	activeId: number
-	liWidth: number
-	ulWidth: number
+  activeId: number
+  liWidth: number
+  ulWidth: number
 }
 
 class Statistics extends React.Component<IProps,IState>{
@@ -37,20 +37,16 @@ class Statistics extends React.Component<IProps,IState>{
   }
   get completedTodos(){
     return this.props.todos.filter(todo=>todo.completed && !todo.deleted)
-	    .sort((a,b)=>Date.parse(a.completed_at)-Date.parse(b.completed_at))
   }
   get completedTomatoes(){
     return this.props.tomatoes
-	    .filter(tomato=>!tomato.aborted)
-	    .filter(tomato=> tomato.description && tomato.ended_at)
-	    .sort((a,b)=>Date.parse(a.started_at)-Date.parse(b.started_at))
+      .filter(tomato=>!tomato.aborted)
+      .filter(tomato=> tomato.description && tomato.ended_at)
   }
   get dailyTomatoes(){
     const newList = new Map()
     const dailyTomatoes = {}
-    this.completedTomatoes
-      .sort((a,b)=>Date.parse(b.started_at)-Date.parse(a.started_at))
-      .forEach(tomato=>{
+    this.completedTomatoes.forEach(tomato=>{
         const day = dayJs(tomato.started_at).format('YYYY-MM-DD')
         const list = newList.get(day)||[]
         list.push(tomato)
@@ -64,9 +60,7 @@ class Statistics extends React.Component<IProps,IState>{
   get dailyTodos(){
     const newList = new Map()
     const dailyTodos = {}
-    this.completedTodos
-      .sort((a,b)=>Date.parse(b.completed_at)-Date.parse(a.completed_at))
-      .forEach(todo=>{
+    this.completedTodos.forEach(todo=>{
       const day = dayJs(todo.completed_at).format('YYYY-MM-DD')
       const list =newList.get(day) || []
       list.push(todo)
@@ -162,7 +156,7 @@ class Statistics extends React.Component<IProps,IState>{
         {this.state.activeId=== 1 ?
           <TomatoHistory
             dailyTomatoes = {this.dailyTomatoes}
-            updateTomatoes={this.props.tomatoes.filter(tomato=>tomato.aborted && !tomato.description)}
+            updateTomatoes={this.props.tomatoes.filter(tomato=>tomato.aborted)}
             UpdateTomato = {this.props.UpdateTomato}
             AddTomatoes = {this.props.AddTomatoes}
           />

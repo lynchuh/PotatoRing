@@ -79,7 +79,7 @@ export default class extends React.PureComponent<IProps,any>{
             </div>
           </TabPane>
           <TabPane tab="已删除的任务" key="2">
-            <DeletedTodos todos={this.props.deletedTodos} turnToUndeleted={this.turnToUnDeleted}/>
+            <DeletedTodos todos={this.props.deletedTodos} turnToUnDeleted={this.turnToUnDeleted}/>
           </TabPane>
         </Tabs>
       </div>

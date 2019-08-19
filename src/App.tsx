@@ -1,12 +1,10 @@
 import React from 'react';
-import { Router } from 'react-router-dom'
-import history from './config/history'
-import { renderRoutes } from 'react-router-config'
-import routes from './routes'
-
 import { Provider } from 'react-redux'
+import { Router } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
 import store from './store'
-
+import history from './config/history'
+import routes from './routes'
 import './App.scss';
 
 class App extends React.Component {

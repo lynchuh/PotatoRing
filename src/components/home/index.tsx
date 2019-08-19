@@ -61,6 +61,11 @@ export default class extends React.Component<IProps,never>{
     localStorage.setItem('xToken','')
     this.props.history.push('/login')
   }
+  get sortData(){
+    const todos = this.props.TodoReducer.todos.sort((a,b)=>Date.parse(b.completed_at)-Date.parse(a.completed_at))
+    const tomatoes = this.props.TomatoReducer.tomatoes.sort((a,b)=>Date.parse(b.started_at)-Date.parse(a.started_at))
+    return {todos,tomatoes}
+  }
   public render(){
     const menu = (
       <Menu>
@@ -99,8 +104,8 @@ export default class extends React.Component<IProps,never>{
           />
         </main>
         <Statistics
-          tomatoes={this.props.TomatoReducer.tomatoes}
-          todos= {this.props.TodoReducer.todos }
+          tomatoes={this.sortData.tomatoes}
+          todos= {this.sortData.todos }
           UpdateTodo = {this.props.UpdateTodo}
           CompletedTodo = {this.props.CompletedTodo}
           UpdateTomato = {this.props.UpdateTomato}

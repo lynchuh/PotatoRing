@@ -1,13 +1,17 @@
-# POTATO App
+# TOMATO App
 > 仿[番茄土豆](https://pomotodo.com/app/)的线上webApp
 
 ## 前言
+
 1. 这次项目重点体验typescript与react的结合，直接使用官方脚手架create-react-app搭建环境。
 2. 项目中数据统计图形使用HTML5的Svg展示。
 3. 项目采用前后端分离开发模式。后端接口需要appkey才可以使用。
 
-### [项目地址](https://github.com/lynchuh/PotatoRing)
-### [项目预览](https://lynchuh.github.io/PotatoRing/)
+### 项目地址
+ [tomatoApp](https://github.com/lynchuh/PotatoRing)
+ [预览](https://lynchuh.github.io/PotatoRing/)
+ 
+ 喜欢的话，别忘记点个 Star 哦，谢谢啦~ 😝
 
 ## 实现功能
 1. 简单用户系统---登陆/注册/路由鉴权
@@ -39,25 +43,11 @@
   - 番茄历史
   
     手动新增番茄
-    
     ![手动新增番茄.png](https://i.loli.net/2019/04/13/5cb198dfa3db4.png)
     
-    完成的番茄历史
-    
-    ![番茄历史1.png](https://i.loli.net/2019/04/13/5cb198dd6300c.png)
-    
-    被打断的番茄历史
-    
-    ![番茄历史2.png](https://i.loli.net/2019/04/13/5cb198dd64931.png)
   - 任务历史
-    
-    完成的任务历史
-    
     ![任务历史1.png](https://i.loli.net/2019/04/13/5cb198de707b5.png)
     
-    删除的任务历史
-    
-    ![任务历史2.png](https://i.loli.net/2019/04/13/5cb198de707b5.png)
 
 ## 实现细节
 1. 封装axios，生成实例。使用拦截器处理后端传来的token
@@ -71,3 +61,4 @@
   - 关于container的设计，我只将route component作为container，因为这个项目的组件设计并不复杂，如果每个组件都connect，显得更繁杂。不同组件各司其职岂不更好？
   - 使用thunk后，action可以是函数。因此在路由鉴权这部分的工作，我也一并放在action这里处理了（登陆、注册后也需要路由跳转），所以并没有使用browserRouter自带的history，而是自己封装了一个history。
 3. 这次项目的数据统计图---折线图/条形图等使用Svg来展示，SVg相比canvas，它不依赖分辨率，是基于矢量的图像，因此即使在放大或改变尺寸的情况下也不会失真。
+

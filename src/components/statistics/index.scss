@@ -95,6 +95,7 @@
       .item{
         padding: 8px 66px 8px 8px;
         position: relative;
+
         .action_wrapper{
           display: none;
           position: absolute;
@@ -191,6 +192,10 @@
         position: relative;
         display:flex;
         align-items: center;
+        .day_time{
+          flex-shrink: 0;
+          width: 108px;
+        }
         span{
           min-height: 32px;
           line-height: 32px;
@@ -391,7 +396,7 @@
         .itemlist{
           width: 100%;
           .item{
-          width: 100%;
+            width: 100%;
           }
         }
       }

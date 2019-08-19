@@ -28,29 +28,29 @@ export default class extends React.Component<IProps,IState>{
       .filter(t=>dayJs(t.calTime).format('YYYY')===this.state.currentYear)
   }
   get averages(){
-	  const currentMonthDays = dayJs(`${this.state.currentYear}-${this.state.currentMonth}-1`).daysInMonth()
-	  return (this.monthData.length/currentMonthDays).toFixed(2)
+    const currentMonthDays = dayJs(`${this.state.currentYear}-${this.state.currentMonth}-1`).daysInMonth()
+    return (this.monthData.length/currentMonthDays).toFixed(2)
   }
-	get rate(){
-		const {currentMonth,currentYear} = this.state
-		const lastYear = currentMonth === '01' ? `${Number(currentYear)-1}` : currentYear
-		let lastMonth = currentMonth === '01' ? '12': `${Number(currentMonth) -1}`
-		if(Number(lastMonth)<10){
-			lastMonth = `0${lastMonth}`
-		}
-		const lastNum = this.props.caleData
-			.filter(t=>dayJs(t.calTime).format('MM') === lastMonth)
-			.filter(t=>dayJs(t.calTime).format('YYYY') === lastYear)
-			.length
-		let r = ((this.monthData.length-lastNum)/lastNum).toFixed(1)
+  get rate(){
+    const {currentMonth,currentYear} = this.state
+    const lastYear = currentMonth === '01' ? `${Number(currentYear)-1}` : currentYear
+    let lastMonth = currentMonth === '01' ? '12': `${Number(currentMonth) -1}`
+    if(Number(lastMonth)<10){
+      lastMonth = `0${lastMonth}`
+    }
+    const lastNum = this.props.caleData
+      .filter(t=>dayJs(t.calTime).format('MM') === lastMonth)
+      .filter(t=>dayJs(t.calTime).format('YYYY') === lastYear)
+      .length
+    let r = ((this.monthData.length-lastNum)/lastNum).toFixed(1)
         if(Number(r)===Infinity){
           r = '1.0'
         }else if(!Number(r)){
           r = '0'
         }
-		return r
-	}
-	get chartData(){
+    return r
+  }
+  get chartData(){
     const {currentYear,currentMonth} = this.state
     const newList = new Map();
     const obj ={}
@@ -68,6 +68,7 @@ export default class extends React.Component<IProps,IState>{
     for (const [key,value] of newList){
       obj[key] = value
     }
+    // 兼容性较差的做法： obj = Object.entries(newList)
     return {monthChart:obj,XRange:totalDay}
   }
 	onChangeYear = (value)=> {
@@ -77,7 +78,7 @@ export default class extends React.Component<IProps,IState>{
       })
     }
   }
-	onChangeMonth = (value)=>{
+  onChangeMonth = (value)=>{
     const month = value > 10 ? `${value}` : `0${value}`
     if(month !== this.state.currentMonth){
       this.setState({
